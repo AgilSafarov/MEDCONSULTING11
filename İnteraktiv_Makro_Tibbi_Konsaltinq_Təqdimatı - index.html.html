@@ -1,0 +1,2502 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="narrative">
+  <meta name="design-style" content="briefing">
+  <title>Azərbaycanda Tibbi Konsaltinq Bazarı — Strateji Təqdimat və Bazar Arayışı</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Page and surfaces: warm stone-white paper */
+      --background: #faf9f5;
+      --surface-container-low: #ffffff;
+      --surface-container: #f1efe8;
+      --surface-container-high: #e6e2d6;
+
+      /* Ink */
+      --on-surface: #17181a;
+      --on-surface-variant: #56585c;
+
+      /* Rules */
+      --outline: #17181a;
+      --outline-variant: #dedad0;
+
+      /* Accents */
+      --primary: #17181a;
+      --on-primary: #faf9f5;
+      --primary-container: #f2b705;
+      --on-primary-container: #17181a;
+      --secondary: #1f4e5f;
+      --secondary-wash: #eaf1f3;
+      --tertiary: #785008;
+      --tertiary-wash: #f5e6c4;
+      --error: #b42318;
+      --error-wash: #fdeceb;
+      --on-error: #ffffff;
+
+      /* Semantic */
+      --positive: #2b6e52;
+      --positive-wash: #e8f3ee;
+      --warning: #785008;
+
+      /* Focus ring */
+      --focus: #1f4e5f;
+
+      /* Data series */
+      --data-1: #1f4e5f;
+      --data-2: #d99000;
+      --data-3: #2b6e52;
+      --data-4: #b84a39;
+      --data-context: #c4bfb2;
+
+      /* Fonts (Azerbaijani Latin-Ext full glyph coverage) */
+      --font-headline: 'Source Serif 4', Georgia, serif;
+      --font-body: 'Inter', sans-serif;
+      --font-label: 'IBM Plex Mono', monospace;
+
+      /* Narrative type scale */
+      --display-size: clamp(2rem, 1.35rem + 2.4vw, 3.35rem);
+      --headline-size: clamp(1.5rem, 1.15rem + 1.4vw, 2.25rem);
+      --subhead-size: clamp(1.125rem, 1.02rem + 0.45vw, 1.35rem);
+      --body-size: clamp(1rem, 0.96rem + 0.18vw, 1.0625rem);
+      --label-size: clamp(0.75rem, 0.72rem + 0.12vw, 0.8125rem);
+
+      /* Shape */
+      --rounded: 0.25rem;
+      --rounded-lg: 0.375rem;
+      --rounded-full: 0.25rem;
+
+      /* Style effects */
+      --section-rule: 1.5px solid var(--outline);
+      --card-border: 1px solid var(--outline-variant);
+      --badge-radius: 2px;
+      --heading-tracking: -0.02em;
+      --label-tracking: 0.06em;
+
+      /* Spacing scale */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+      --space-3xl: 5.5rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 420ms;
+    }
+
+    /* Base reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    header { position: static !important; }
+    button, input, select, textarea { font-family: inherit; }
+
+    :focus-visible {
+      outline: 2.5px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    .page-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-xl);
+      padding: var(--space-lg) var(--space-lg) var(--space-3xl);
+      max-width: 1200px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .page-grid * { min-width: 0; }
+
+    /* Briefing Dossier Treatments */
+    .dossier-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      border-bottom: var(--section-rule);
+      padding-bottom: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+    .dossier-bar-left {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .dossier-pill {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.6875rem;
+      letter-spacing: var(--label-tracking);
+      text-transform: uppercase;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--badge-radius);
+      display: inline-block;
+    }
+    .dossier-pill--subtle {
+      background: var(--surface-container);
+      color: var(--on-surface);
+      border: var(--card-border);
+    }
+    .dossier-pill--secondary {
+      background: var(--secondary-wash);
+      color: var(--secondary);
+    }
+    .dossier-pill--positive {
+      background: var(--positive-wash);
+      color: var(--positive);
+    }
+    .dossier-pill--tertiary {
+      background: var(--tertiary-wash);
+      color: var(--tertiary);
+    }
+    .dossier-meta {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .masthead {
+      padding-top: var(--space-sm);
+      padding-bottom: var(--space-lg);
+      border-bottom: var(--section-rule);
+    }
+    .title {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: var(--display-size);
+      letter-spacing: var(--heading-tracking);
+      line-height: 1.08;
+      color: var(--on-surface);
+      margin: 0;
+    }
+    .standfirst {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: var(--subhead-size);
+      line-height: 1.45;
+      color: var(--secondary);
+      margin: var(--space-md) 0 0;
+      max-width: 72ch;
+    }
+    .masthead-meta-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(210px, 100%), 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+      padding-top: var(--space-md);
+      border-top: var(--card-border);
+    }
+    .meta-kv {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .meta-k {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      text-transform: uppercase;
+    }
+    .meta-v {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--on-surface);
+    }
+
+    /* Interactive Slide Navigation Bar */
+    .slide-nav-shell {
+      background: var(--surface-container-low);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .slide-nav-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      border-bottom: var(--card-border);
+      padding-bottom: var(--space-sm);
+    }
+    .slide-nav-status {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+    .mode-switch-group {
+      display: inline-flex;
+      gap: var(--space-xs);
+      background: var(--surface-container);
+      padding: var(--space-xs);
+      border-radius: var(--rounded);
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: var(--on-primary);
+    }
+    .btn-primary:hover {
+      background: var(--secondary);
+    }
+    .btn-secondary {
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      border-color: var(--outline-variant);
+    }
+    .btn-secondary:hover {
+      background: var(--surface-container);
+    }
+    .btn-mode {
+      min-height: 36px;
+      padding: var(--space-xs) var(--space-md);
+      background: transparent;
+      color: var(--on-surface-variant);
+      font-size: 0.8125rem;
+    }
+    .btn-mode[aria-pressed="true"] {
+      background: var(--primary);
+      color: var(--on-primary);
+    }
+    .btn:disabled {
+      opacity: 0.42;
+      cursor: not-allowed;
+    }
+
+    .slide-pills-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr));
+      gap: var(--space-sm);
+    }
+    .slide-pill-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      background: var(--background);
+      border: var(--card-border);
+      border-radius: var(--rounded);
+      cursor: pointer;
+      color: var(--on-surface);
+      transition: background-color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+    .slide-pill-btn:hover {
+      background: var(--surface-container);
+    }
+    .slide-pill-btn[aria-current="step"] {
+      background: var(--surface-container-low);
+      box-shadow: inset 0 -3px 0 var(--primary-container), 0 0 0 1px var(--outline);
+    }
+    .slide-pill-num {
+      font-family: var(--font-label);
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--secondary);
+    }
+    .slide-pill-title {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .deck-progress-track {
+      width: 100%;
+      height: 4px;
+      background: var(--surface-container-high);
+      border-radius: var(--badge-radius);
+      overflow: hidden;
+    }
+    .deck-progress-fill {
+      height: 100%;
+      width: 14.28%;
+      background: var(--secondary);
+      transition: width var(--dur-short) var(--ease-out);
+    }
+
+    /* Slide Sections */
+    .slides-stack {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2xl);
+    }
+    .slide-section {
+      padding-top: var(--space-md);
+      transition: opacity var(--dur-short) var(--ease-out);
+    }
+    .slides-stack.presentation-mode .slide-section {
+      display: none;
+    }
+    .slides-stack.presentation-mode .slide-section.is-active-slide {
+      display: block;
+    }
+
+    .section-heading {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: var(--headline-size);
+      letter-spacing: var(--heading-tracking);
+      line-height: 1.15;
+      color: var(--on-surface);
+      margin: 0;
+    }
+    .section-lede {
+      font-size: var(--body-size);
+      color: var(--on-surface-variant);
+      margin: var(--space-sm) 0 0;
+      max-width: 72ch;
+    }
+
+    /* Figure Cards */
+    .figure-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+    }
+    .figure-card {
+      background: var(--surface-container-low);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .figure-card .label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      text-transform: uppercase;
+    }
+    .figure-card .value {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: clamp(1.5rem, 1.2rem + 1vw, 2.1rem);
+      font-variant-numeric: lining-nums tabular-nums;
+      color: var(--on-surface);
+      line-height: 1.15;
+    }
+    .figure-card .note {
+      font-size: 0.875rem;
+      color: var(--on-surface-variant);
+      line-height: 1.45;
+    }
+
+    /* Asymmetric Split Layouts */
+    .split-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      margin-top: var(--space-lg);
+      align-items: start;
+    }
+    .split-grid--reverse {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+    }
+
+    /* Interactive Choice Cards & Inspectors */
+    .choice-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .choice-card {
+      width: 100%;
+      text-align: left;
+      background: var(--surface-container-low);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      color: var(--on-surface);
+      transition: background-color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+    .choice-card:hover {
+      background: var(--surface-container);
+    }
+    .choice-card[aria-pressed="true"] {
+      background: var(--surface-container-low);
+      box-shadow: inset 4px 0 0 var(--primary-container), 0 0 0 1px var(--outline);
+    }
+    .choice-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+    .index-num {
+      font-family: var(--font-label);
+      font-weight: 600;
+      font-size: var(--label-size);
+      color: var(--secondary);
+    }
+    .choice-title {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--on-surface);
+    }
+    .choice-summary {
+      font-size: 0.875rem;
+      color: var(--on-surface-variant);
+      line-height: 1.45;
+    }
+
+    .inspector-panel {
+      background: var(--surface-container-low);
+      border: var(--card-border);
+      border-top: var(--section-rule);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .inspector-title {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: 1.35rem;
+      line-height: 1.2;
+      margin: 0;
+      color: var(--on-surface);
+    }
+    .inspector-subtitle {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--secondary);
+      margin: 0;
+    }
+    .detail-list {
+      margin: 0;
+      padding-left: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .detail-list li {
+      font-size: 0.9375rem;
+      line-height: 1.5;
+      color: var(--on-surface);
+    }
+
+    .aside-box {
+      background: var(--surface-container);
+      border-top: var(--section-rule);
+      padding: var(--space-md) var(--space-lg);
+      border-radius: var(--rounded);
+    }
+    .aside-box--warning {
+      border-top-color: var(--error);
+      background: var(--error-wash);
+    }
+    .aside-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--tertiary);
+      margin-bottom: var(--space-xs);
+      display: block;
+    }
+    .aside-box--warning .aside-label {
+      color: var(--error);
+    }
+
+    /* Timeline Strip */
+    .timeline-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(170px, 100%), 1fr));
+      gap: var(--space-sm);
+      margin-top: var(--space-lg);
+    }
+    .timeline-node {
+      background: var(--surface-container-low);
+      border: var(--card-border);
+      border-radius: var(--rounded);
+      padding: var(--space-sm) var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .timeline-node--highlight {
+      border-top: 3px solid var(--primary-container);
+    }
+    .timeline-date {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--secondary);
+    }
+    .timeline-text {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    /* Benchmark Duo */
+    .benchmark-switch {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-top: var(--space-lg);
+    }
+    .tab-pill {
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      background: var(--surface-container-low);
+      border: var(--card-border);
+      border-radius: var(--rounded);
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: var(--on-surface);
+      cursor: pointer;
+    }
+    .tab-pill[aria-pressed="true"] {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+    .block-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+      gap: var(--space-sm);
+    }
+    .block-btn {
+      text-align: left;
+      min-height: 44px;
+      padding: var(--space-md);
+      background: var(--surface-container-low);
+      border: var(--card-border);
+      border-radius: var(--rounded);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      color: var(--on-surface);
+    }
+    .block-btn:hover {
+      background: var(--surface-container);
+    }
+    .block-btn[aria-pressed="true"] {
+      box-shadow: inset 0 -3px 0 var(--secondary), 0 0 0 1px var(--outline);
+    }
+
+    /* Matrix Table & Chart */
+    .filter-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      justify-content: space-between;
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+    }
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+    .table-wrap {
+      background: var(--surface-container-low);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      overflow-x: auto;
+    }
+    table.matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+      font-variant-numeric: tabular-nums;
+    }
+    table.matrix-table th {
+      font-family: var(--font-label);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      text-align: left;
+      padding: var(--space-md) var(--space-sm);
+      background: var(--surface-container);
+      border-bottom: var(--section-rule);
+      color: var(--on-surface);
+      white-space: nowrap;
+    }
+    table.matrix-table th.center,
+    table.matrix-table td.center {
+      text-align: center;
+    }
+    table.matrix-table td {
+      padding: var(--space-sm);
+      border-bottom: var(--card-border);
+      vertical-align: middle;
+    }
+    table.matrix-table tbody tr {
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+    table.matrix-table tbody tr:hover {
+      background: var(--surface-container);
+    }
+    table.matrix-table tbody tr.is-selected {
+      background: var(--secondary-wash);
+    }
+    .badge-mark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: var(--badge-radius);
+      font-family: var(--font-label);
+      font-weight: 700;
+      font-size: 0.875rem;
+    }
+    .mark-yes {
+      background: var(--positive-wash);
+      color: var(--positive);
+    }
+    .mark-partial {
+      background: var(--tertiary-wash);
+      color: var(--tertiary);
+    }
+    .mark-no {
+      background: var(--surface-container);
+      color: var(--on-surface-variant);
+    }
+
+    .chart-card {
+      background: var(--surface-container-low);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .chart-box {
+      position: relative;
+      width: 100%;
+      min-height: 290px;
+      height: 290px;
+    }
+
+    /* 6 Service Verticals Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+    }
+    .module-card {
+      text-align: left;
+      background: var(--surface-container-low);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: var(--space-md);
+      color: var(--on-surface);
+      transition: background-color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+    .module-card:hover {
+      background: var(--surface-container);
+    }
+    .module-card[aria-pressed="true"] {
+      background: var(--surface-container-low);
+      box-shadow: inset 0 4px 0 var(--primary-container), 0 0 0 1.5px var(--outline);
+    }
+    .module-card.is-segment-match {
+      box-shadow: inset 0 4px 0 var(--secondary), 0 0 0 1px var(--secondary);
+    }
+    .module-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+    .module-title {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: 1.1875rem;
+      line-height: 1.25;
+      margin: var(--space-xs) 0 0;
+    }
+    .module-desc {
+      font-size: 0.875rem;
+      color: var(--on-surface-variant);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* 12-Month Gantt Strip */
+    .gantt-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: var(--space-xs);
+      margin-top: var(--space-lg);
+    }
+    .gantt-month {
+      text-align: center;
+      font-family: var(--font-label);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: var(--space-xs) 0;
+      background: var(--surface-container);
+      border-radius: var(--badge-radius);
+      color: var(--on-surface-variant);
+    }
+    .gantt-month.is-active {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+    .roadmap-phase-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+      gap: var(--space-sm);
+      margin-top: var(--space-md);
+    }
+
+    /* Bottom Deck Controls */
+    .slide-footer-nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+      padding-top: var(--space-md);
+      border-top: var(--card-border);
+    }
+
+    /* Footer / Sources */
+    .dossier-footer {
+      border-top: var(--section-rule);
+      padding-top: var(--space-lg);
+      margin-top: var(--space-xl);
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+    }
+    .sources-text {
+      font-size: 0.8125rem;
+      color: var(--on-surface-variant);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Container query adaptation */
+    .card-wrapper { container-type: inline-size; }
+    @container (max-width: 480px) {
+      .inspector-panel { padding: var(--space-md); }
+    }
+
+    /* Responsive Media Query */
+    @media (max-width: 860px) {
+      .split-grid,
+      .split-grid--reverse,
+      .dossier-footer {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+    @media (max-width: 640px) {
+      .page-grid {
+        padding: var(--space-md);
+        gap: var(--space-lg);
+      }
+      .gantt-grid {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-grid">
+
+    <!-- MASTHEAD -->
+    <header class="masthead">
+      <div class="dossier-bar">
+        <div class="dossier-bar-left">
+          <span class="dossier-pill">Strateji Dosye</span>
+          <span class="dossier-meta">Tibbi Konsaltinq · Azərbaycan və Beynəlxalq Müqayisə</span>
+        </div>
+        <span class="dossier-meta">Tarix: 17 Noyabr 2026</span>
+      </div>
+      <h1 class="title">Azərbaycanda Tibbi Konsaltinq Bazarı: Strateji Mövqelənmə və İnteqrasiya Modeli</h1>
+      <p class="standfirst">Dərman və tibb vasitələri üzrə tənzimləyici uyğunluq (RA/PV), klinika akkreditasiyası və səhiyyə iqtisadiyyatını vahid ölçülə bilən portfeldə birləşdirən yeni konsaltinq şirkəti üçün makro təhlil, beynəlxalq benchmarklar və 12 aylıq fəaliyyət xəritəsi.</p>
+
+      <div class="masthead-meta-strip">
+        <div class="meta-kv">
+          <span class="meta-k">Sənədin Statusu</span>
+          <span class="meta-v">İlkin bazar arayışı və qərarvermə çərçivəsi</span>
+        </div>
+        <div class="meta-kv">
+          <span class="meta-k">Tədqiqat Metodu</span>
+          <span class="meta-v">Açıq mənbə üzrə masaüstü araşdırma (rəsmi saytlar, normativ aktlar)</span>
+        </div>
+        <div class="meta-kv">
+          <span class="meta-k">Əsas Fərqlənmə Tezisi</span>
+          <span class="meta-v">Klinik keyfiyyət + İqtisadi səmərəlilik + RA/PV uyğunluq sinerjisi</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- INTERACTIVE SLIDE NAVIGATION SHELL -->
+    <nav class="slide-nav-shell" aria-label="Təqdimat slaydları üzrə naviqasiya">
+      <div class="slide-nav-top">
+        <div class="slide-nav-status">
+          <span class="dossier-pill dossier-pill--secondary" id="active-slide-badge">Slayd 01 / 07</span>
+          <span class="dossier-meta" id="active-slide-name">İcra Xülasəsi və Strateji Tezis</span>
+        </div>
+        <div class="slide-nav-status">
+          <div class="mode-switch-group" role="group" aria-label="Görünüş rejimi">
+            <button type="button" class="btn btn-mode" id="btn-mode-scroll" aria-pressed="true" onclick="setViewMode('scroll')">Tam oxu rejimi</button>
+            <button type="button" class="btn btn-mode" id="btn-mode-slide" aria-pressed="false" onclick="setViewMode('slide')">Slayd rejimi</button>
+          </div>
+          <button type="button" class="btn btn-secondary" id="btn-prev-slide" onclick="stepSlide(-1)" aria-label="Əvvəlki slayd">← Əvvəlki</button>
+          <button type="button" class="btn btn-primary" id="btn-next-slide" onclick="stepSlide(1)" aria-label="Növbəti slayd">Növbəti →</button>
+        </div>
+      </div>
+
+      <div class="deck-progress-track" aria-hidden="true">
+        <div class="deck-progress-fill" id="deck-progress-fill"></div>
+      </div>
+
+      <div class="slide-pills-row" role="list">
+        <button type="button" class="slide-pill-btn" data-slide-target="1" aria-current="step" onclick="goToSlide(1)">
+          <span class="slide-pill-num">SLAYD 01</span>
+          <span class="slide-pill-title">İcra Xülasəsi və Tezis</span>
+        </button>
+        <button type="button" class="slide-pill-btn" data-slide-target="2" onclick="goToSlide(2)">
+          <span class="slide-pill-num">SLAYD 02</span>
+          <span class="slide-pill-title">Normativ Mühit (2028)</span>
+        </button>
+        <button type="button" class="slide-pill-btn" data-slide-target="3" onclick="goToSlide(3)">
+          <span class="slide-pill-num">SLAYD 03</span>
+          <span class="slide-pill-title">Makromed vs PHARMAGATE</span>
+        </button>
+        <button type="button" class="slide-pill-btn" data-slide-target="4" onclick="goToSlide(4)">
+          <span class="slide-pill-num">SLAYD 04</span>
+          <span class="slide-pill-title">Qlobal Müqayisə Matrisi</span>
+        </button>
+        <button type="button" class="slide-pill-btn" data-slide-target="5" onclick="goToSlide(5)">
+          <span class="slide-pill-num">SLAYD 05</span>
+          <span class="slide-pill-title">6 Xidmət Şaquli</span>
+        </button>
+        <button type="button" class="slide-pill-btn" data-slide-target="6" onclick="goToSlide(6)">
+          <span class="slide-pill-num">SLAYD 06</span>
+          <span class="slide-pill-title">12 Aylıq Yol Xəritəsi</span>
+        </button>
+        <button type="button" class="slide-pill-btn" data-slide-target="7" onclick="goToSlide(7)">
+          <span class="slide-pill-num">SLAYD 07</span>
+          <span class="slide-pill-title">Risklər və Komanda</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- SLIDES CONTAINER -->
+    <main class="slides-stack" id="slides-stack">
+
+      <!-- SLIDE 01: EXECUTIVE SUMMARY -->
+      <section class="slide-section is-active-slide" id="slide-1" data-slide="1" aria-labelledby="h-slide-1">
+        <div class="dossier-bar">
+          <div class="dossier-bar-left">
+            <span class="dossier-pill">Slayd 01</span>
+            <span class="dossier-meta">İcra Xülasəsi · Makro Mənzərə</span>
+          </div>
+          <span class="dossier-meta">4 Funksional Seqment</span>
+        </div>
+
+        <h2 class="section-heading" id="h-slide-1">Bazar artıq formalaşıb — əsas fürsət xidmətlərin mexaniki yığımında yox, ölçülə bilən inteqrasiyadadır</h2>
+        <p class="section-lede">Azərbaycanda dərman qeydiyyatı və farmakonəzarət (RA/PV) üzrə ixtisaslaşmış təchizatçılar, eləcə də xəstəxana idarəçiliyi və akkreditasiya hazırlığı xidmətləri artıq mövcuddur. Yeni şirkət üçün fərqlənmə nöqtəsi klinik keyfiyyət, iqtisadi səmərəlilik və məhsul uyğunluğu nəticələrini vahid layihə portfelində ölçməkdir.</p>
+
+        <div class="figure-grid">
+          <div class="figure-card">
+            <span class="label">Yeni Akkreditasiya Tarixi</span>
+            <span class="value">01.01.2028</span>
+            <span class="note">09.07.2026-da təsdiqlənmiş yeni dövlət akkreditasiya qaydasının qüvvəyə minmə günü</span>
+          </div>
+          <div class="figure-card">
+            <span class="label">Bazar Seqmentləri</span>
+            <span class="value">4 Şaqul</span>
+            <span class="note">(A) RA-PV, (B) Klinika idarəçiliyi, (C) Maliyyə/HTA, (D) Müstəqil sertifikatlaşdırma/audit</span>
+          </div>
+          <div class="figure-card">
+            <span class="label">Yerli RA/PV Təchizatçıları</span>
+            <span class="value">7+ Oyunçu</span>
+            <span class="note">Makromed, RegBridge, PharmExpert, FRH, Pharmcontrol, Nexa Pharm, Insuvia</span>
+          </div>
+          <div class="figure-card">
+            <span class="label">İlkin Pilot Müddəti</span>
+            <span class="value">1–2 Həftə</span>
+            <span class="note">Geniş brendinqə başlamazdan əvvəl real klinikada test diaqnostika mərhələsi</span>
+          </div>
+        </div>
+
+        <div class="split-grid">
+          <div class="choice-list" role="group" aria-label="İlk 12 ay üçün strateji fokus variantları">
+            <button type="button" class="choice-card" data-strategy="A" aria-pressed="false" onclick="selectStrategy('A')">
+              <div class="choice-card-head">
+                <span class="index-num">SEÇİM A</span>
+                <span class="dossier-pill dossier-pill--secondary">Klinika + İqtisadiyyat</span>
+              </div>
+              <span class="choice-title">Klinikaların akkreditasiyası və maliyyə səmərəliliyi fokusu</span>
+              <span class="choice-summary">2028 dövlət akkreditasiyası, AZS ISO 7101/15189 və xərc-tarif optimallaşdırılması əsas lokomotiv kimi seçilir.</span>
+            </button>
+
+            <button type="button" class="choice-card" data-strategy="B" aria-pressed="false" onclick="selectStrategy('B')">
+              <div class="choice-card-head">
+                <span class="index-num">SEÇİM B</span>
+                <span class="dossier-pill dossier-pill--tertiary">Dərman + MedTech RA/PV</span>
+              </div>
+              <span class="choice-title">Dərman və tibb vasitələri üzrə tənzimləyici uyğunluq fokusu</span>
+              <span class="choice-summary">Qeydiyyat, PV autsorsinqi və ISO 13485 hazırlığı ilə mövcud tələbata birbaşa giriş.</span>
+            </button>
+
+            <button type="button" class="choice-card" data-strategy="C" aria-pressed="true" onclick="selectStrategy('C')">
+              <div class="choice-card-head">
+                <span class="index-num">SEÇİM C · TƏKLİF OLUNAN HİPOTEZ</span>
+                <span class="dossier-pill">İki Komandalı İnteqrasiya</span>
+              </div>
+              <span class="choice-title">Klinik keyfiyyət + İqtisadi nəticə + RA/PV uyğunluğunun vahid portfeli</span>
+              <span class="choice-summary">İki ixtisaslaşmış komanda vasitəsilə xəstəxana keyfiyyətini dərman/cihaz idarəetməsi və maliyyə KPI-ları ilə birləşdirmək.</span>
+            </button>
+          </div>
+
+          <div class="inspector-panel card-wrapper" id="strategy-inspector">
+            <span class="dossier-pill dossier-pill--secondary" id="strat-badge">Variant C · İnteqrasiya Modeli</span>
+            <h3 class="inspector-title" id="strat-title">Ölçülə bilən kəsişmə: Keyfiyyət × Maliyyə × Uyğunluq</h3>
+            <p class="inspector-subtitle" id="strat-sub">Tövsiyə olunan başlanğıc strategiyası (pilot və müsahibə ilə təsdiqlənməlidir)</p>
+            <ul class="detail-list" id="strat-points">
+              <li>Müştəriyə ayrıca sənəd toplusu yox, xəstəxana keyfiyyətini, tibbi xərcləri və məhsul uyğunluğunu eyni idarəetmə panelində birləşdirən nəticə təklif olunur.</li>
+              <li>Modul xidmətlər (akkreditasiya hazırlığı, ISO QMS, klinika maliyyə konsaltinqi, RA/PV ekspertizası) başlanğıcda ayrı-ayrı test edilir.</li>
+              <li>Əsas şərt: klinik konsultasiya ilə RA-PV funksiyasını iki ayrı texniki komanda daşımalı, hər ikisində yüksək ixtisas qorunmalıdır.</li>
+            </ul>
+            <div class="aside-box">
+              <span class="aside-label">Etibarlılıq və Metodologiya Qeydi</span>
+              <span id="strat-note">Bütün xidmət iddiaları açıq veb-saytlara əsaslanır; müştəri sayı, dövriyyə və real uğur faizləri müstəqil audit edilməyib. İlk 12 ay qərarı 15–25 bazar müsahibəsindən sonra verilməlidir.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 02: REGULATORY ENVIRONMENT -->
+      <section class="slide-section" id="slide-2" data-slide="2" aria-labelledby="h-slide-2">
+        <div class="dossier-bar">
+          <div class="dossier-bar-left">
+            <span class="dossier-pill">Slayd 02</span>
+            <span class="dossier-meta">Normativ Mühit · 2026–2028 Keçidi</span>
+          </div>
+          <span class="dossier-meta">4 Əsas Standart və Qayda</span>
+        </div>
+
+        <h2 class="section-heading" id="h-slide-2">2028-ci il dövlət akkreditasiyası və yeni AZS ISO standartları tələbin əsas katalizatorudur</h2>
+        <p class="section-lede">Normativ dəyişikliklər tibb müəssisələri, laboratoriyalar və cihaz təchizatçıları üçün yeni uyğunluq öhdəlikləri yaradır. Lakin konsaltinq şirkəti hazırkı prosedurlarla 2028-ci il qaydasını qarışdırmamalı və səlahiyyət sərhədini dəqiq qorumalıdır.</p>
+
+        <div class="timeline-strip" aria-label="Normativ xronologiya">
+          <div class="timeline-node">
+            <span class="timeline-date">25.12.2019</span>
+            <span class="timeline-text">NK № 502 Qərarı: Dərman vasitələrinin iki mərhələli ekspertiza və qeydiyyat qaydası.</span>
+          </div>
+          <div class="timeline-node">
+            <span class="timeline-date">2024</span>
+            <span class="timeline-text">AZS ISO 15189:2024: Tibbi laboratoriyalarda keyfiyyət və səriştəlilik üzrə milli standart.</span>
+          </div>
+          <div class="timeline-node">
+            <span class="timeline-date">2025</span>
+            <span class="timeline-text">AZS ISO 7101:2025: Səhiyyə təşkilatlarında keyfiyyət idarəetməsi üzrə milli standart (AZSTAND).</span>
+          </div>
+          <div class="timeline-node timeline-node--highlight">
+            <span class="timeline-date">09.07.2026</span>
+            <span class="timeline-text">Nazirlər Kabineti tərəfindən yeni Dövlət Akkreditasiya Qaydasının təsdiqi.</span>
+          </div>
+          <div class="timeline-node timeline-node--highlight">
+            <span class="timeline-date">01.01.2028</span>
+            <span class="timeline-text">Yeni Dövlət Akkreditasiya Qaydasının rəsmi qüvvəyə minmə tarixi.</span>
+          </div>
+        </div>
+
+        <div class="split-grid">
+          <div class="choice-list" role="group" aria-label="Normativ standartların seçimi">
+            <button type="button" class="choice-card" data-reg="acc2028" aria-pressed="true" onclick="selectReg('acc2028')">
+              <div class="choice-card-head">
+                <span class="index-num">NORM 01 · DÖVLƏT QAYDASI</span>
+                <span class="dossier-pill">01.01.2028</span>
+              </div>
+              <span class="choice-title">Dövlət Akkreditasiya Qaydası (09.07.2026 redaksiyası)</span>
+              <span class="choice-summary">Tibb müəssisələrinin akkreditasiyası üçün yenilənmiş hüquqi çərçivə; 13+ aylıq keçid hazırlığı pəncərəsi.</span>
+            </button>
+
+            <button type="button" class="choice-card" data-reg="iso7101" aria-pressed="false" onclick="selectReg('iso7101')">
+              <div class="choice-card-head">
+                <span class="index-num">NORM 02 · MİLLİ STANDART</span>
+                <span class="dossier-pill dossier-pill--secondary">AZSTAND</span>
+              </div>
+              <span class="choice-title">AZS ISO 7101:2025 — Səhiyyə Keyfiyyət İdarəetməsi</span>
+              <span class="choice-summary">Klinika və xəstəxanalarda ölçülə bilən keyfiyyət sistemi və pasiyent mərkəzli KPI arxitekturası.</span>
+            </button>
+
+            <button type="button" class="choice-card" data-reg="iso15189" aria-pressed="false" onclick="selectReg('iso15189')">
+              <div class="choice-card-head">
+                <span class="index-num">NORM 03 · LABORATORİYA</span>
+                <span class="dossier-pill dossier-pill--positive">SƏRİŞTƏLİLİK</span>
+              </div>
+              <span class="choice-title">AZS ISO 15189:2024 — Tibbi Laboratoriya Keyfiyyəti</span>
+              <span class="choice-summary">Diaqnostika laboratoriyalarında metod validasiyası, texniki səriştəlilik və daxili audit sistemi.</span>
+            </button>
+
+            <button type="button" class="choice-card" data-reg="iso13485" aria-pressed="false" onclick="selectReg('iso13485')">
+              <div class="choice-card-head">
+                <span class="index-num">NORM 04 · MEDTECH QMS</span>
+                <span class="dossier-pill dossier-pill--tertiary">BEYNƏLXALQ</span>
+              </div>
+              <span class="choice-title">ISO 13485:2016 — Tibb Cihazları Keyfiyyət İdarəetməsi</span>
+              <span class="choice-summary">İstehsalçı və uyğun profilli təchizatçılarda QMS hazırlığı və texniki sənəd uyğunluğu.</span>
+            </button>
+          </div>
+
+          <div class="inspector-panel card-wrapper" id="reg-inspector">
+            <span class="dossier-pill" id="reg-badge">Normativ Çərçivə · 01.01.2028</span>
+            <h3 class="inspector-title" id="reg-title">Dövlət Akkreditasiya Qaydası (NK 09.07.2026)</h3>
+            <p class="inspector-subtitle" id="reg-sub">Təsdiqlənən vəziyyət və konsaltinq bazarına birbaşa təsiri</p>
+            <ul class="detail-list" id="reg-points">
+              <li>Təsdiqlənən vəziyyət: 09.07.2026 tarixli yeni redaksiya 01.01.2028 tarixindən qüvvəyə minir.</li>
+              <li>Konsaltinq xidmətləri: gap-analysis, özünüqiymətləndirmə matrisi, SOP və sənəd hazırlığı, mock (sınaq) audit.</li>
+              <li>Mərhələli hazırlıq tibb müəssisələrinə 2028 tarixinə qədər əməliyyat boşluqlarını bağlamağa imkan verir.</li>
+            </ul>
+            <div class="aside-box aside-box--warning" id="reg-warning-box">
+              <span class="aside-label">Xüsusi Hüquqi Xəbərdarlıq</span>
+              <span id="reg-warning">2028-ci il üçün nəzərdə tutulan yeni qaydanın detalları həmin tarixdən əvvəlki prosedurlara avtomatik tətbiq edilə bilməz. Müqavilələrdə qüvvəyəminmə tarixi və hüquqi uyğunluq yoxlaması mütləq göstərilməlidir. Şirkət “akkreditasiya/sertifikat verir” yox, “hazırlayır və müşayiət edir” mövqeyini tutmalıdır.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 03: PRIORITY BENCHMARKS (MAKROMED vs PHARMAGATE) -->
+      <section class="slide-section" id="slide-3" data-slide="3" aria-labelledby="h-slide-3">
+        <div class="dossier-bar">
+          <div class="dossier-bar-left">
+            <span class="dossier-pill">Slayd 03</span>
+            <span class="dossier-meta">Prioritet İki Benchmark · Yerli və Regional Model</span>
+          </div>
+          <span class="dossier-meta">Makromed MMC · PHARMAGATE</span>
+        </div>
+
+        <h2 class="section-heading" id="h-slide-3">Makromed yerli RA/PV + obyekt layihələndirməsini, PHARMAGATE isə regional lifecycle + təlim mərkəzini göstərir</h2>
+        <p class="section-lede">Yerli bazara ən yaxın nümunə Makromed MMC, regional miqyas nümunəsi isə Ukrayna mərkəzli PHARMAGATE şirkətidir. Hər iki şirkətin xidmət bloklarına klikləyərək yeni şirkətin biznes modeli üçün çıxarılan dərsləri nəzərdən keçirin.</p>
+
+        <div class="benchmark-switch" role="group" aria-label="Benchmark şirkət seçimi">
+          <button type="button" class="tab-pill" id="bench-tab-makromed" aria-pressed="true" onclick="selectBenchmarkCompany('makromed')">Makromed MMC (Azərbaycan · 2013-dən)</button>
+          <button type="button" class="tab-pill" id="bench-tab-pharmagate" aria-pressed="false" onclick="selectBenchmarkCompany('pharmagate')">PHARMAGATE (Ukrayna / Regional · 2011-dən)</button>
+        </div>
+
+        <div class="split-grid">
+          <div>
+            <div class="block-grid" id="bench-blocks-grid" role="group" aria-label="Seçilmiş şirkətin xidmət blokları">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <div class="inspector-panel card-wrapper">
+            <span class="dossier-pill dossier-pill--secondary" id="bench-company-tag">Makromed MMC · Azərbaycan</span>
+            <h3 class="inspector-title" id="bench-block-title">Dərman Vasitələrinin Qeydiyyatı</h3>
+            <p class="inspector-subtitle" id="bench-block-scope">Saytda göstərilən konkret fəaliyyət həcmi</p>
+            <ul class="detail-list" id="bench-block-details">
+              <!-- Populated by JS -->
+            </ul>
+            <div class="aside-box">
+              <span class="aside-label">Biznes Modeli Üçün Dərs və Sərhəd Qeydi</span>
+              <span id="bench-block-lesson"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 04: GLOBAL & LOCAL COMPETITIVE MATRIX -->
+      <section class="slide-section" id="slide-4" data-slide="4" aria-labelledby="h-slide-4">
+        <div class="dossier-bar">
+          <div class="dossier-bar-left">
+            <span class="dossier-pill">Slayd 04</span>
+            <span class="dossier-meta">Qlobal və Yerli Rəqabət Matrisi</span>
+          </div>
+          <span class="dossier-meta">İnteraktiv Müqayisə və Qabiliyyət Profili</span>
+        </div>
+
+        <h2 class="section-heading" id="h-slide-4">Qlobal benchmarklar və yerli rəqiblər funksional matrisdə kəsişmir</h2>
+        <p class="section-lede">Matris rəsmi veb-saytlarda açıq göstərilən xidmət portfelinin keyfiyyət müşahidəsidir (bazar payı və ya uğur reytinqi deyil). İstənilən şirkət sətirinə klikləyərək onun əhatə profilini sağdakı qrafikdə Hədəf İnteqrasiya Modeli ilə müqayisə edin.</p>
+
+        <div class="filter-toolbar">
+          <div class="filter-pills" role="group" aria-label="Rəqib kateqoriyası filtri">
+            <button type="button" class="tab-pill" data-cat-filter="all" aria-pressed="true" onclick="filterMatrix('all')">Hamısı (14)</button>
+            <button type="button" class="tab-pill" data-cat-filter="global" aria-pressed="false" onclick="filterMatrix('global')">Qlobal Benchmarklar (6)</button>
+            <button type="button" class="tab-pill" data-cat-filter="local_ra" aria-pressed="false" onclick="filterMatrix('local_ra')">Yerli / Regional RA-PV (5)</button>
+            <button type="button" class="tab-pill" data-cat-filter="clinic" aria-pressed="false" onclick="filterMatrix('clinic')">Klinika, Maliyyə &amp; Audit (3)</button>
+          </div>
+          <span class="dossier-meta">✓ Aydın göstərilir · ~ Əlaqəli təklif · — Açıq təsbit yoxdur</span>
+        </div>
+
+        <div class="split-grid">
+          <div class="table-wrap">
+            <table class="matrix-table" aria-label="Rəqabət qabiliyyəti müqayisə matrisi">
+              <thead>
+                <tr>
+                  <th>Şirkət / Model</th>
+                  <th class="center">Dərman RA/PV</th>
+                  <th class="center">Cihaz RA/QMS</th>
+                  <th class="center">Klinika / Akkred.</th>
+                  <th class="center">İqtisadi / HTA</th>
+                  <th class="center">Təlim</th>
+                </tr>
+              </thead>
+              <tbody id="matrix-tbody">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <div class="chart-card">
+            <div class="dossier-bar">
+              <div class="dossier-bar-left">
+                <span class="dossier-pill dossier-pill--secondary" id="chart-selected-badge">Seçilmiş: IQVIA</span>
+              </div>
+              <span class="dossier-meta">Açıq Xidmət Əhatəsi (0–2 Şkala)</span>
+            </div>
+            <h3 class="inspector-title" id="chart-company-title">IQVIA (Qlobal) vs. Hədəf İnteqrasiya Modeli</h3>
+            <p class="choice-summary" id="chart-company-lesson">HTA, pricing, reimbursement, health economics və analitika — yerli bazarda iqtisadi sübut, payer və bazara çıxış analitikası modeli.</p>
+            <div class="chart-box" style="min-height: 290px;">
+              <canvas id="competitorChart" aria-label="Rəqabət qabiliyyəti müqayisə qrafiki"></canvas>
+            </div>
+            <div class="aside-box">
+              <span class="aside-label">Digər Ekosistem İştirakçıları (Əlavə Kontekst)</span>
+              <span class="choice-summary">Yerli RA/PV sahəsində FRH LLC, Pharmcontrol, Insuvia Azerbaijan; klinik tədqiqatda Health &amp; Science Initiatives; sertifikatlaşdırmada TÜV Austria Azerbaijan, Keyfiyyət Assosiasiyası/INCERT və SGS Azerbaijan da mövcuddur. DNV Healthcare və Cratia (12 ölkə) müstəqillik və maraqlar toqquşması sərhədini qorumaq üçün əsas nümunələrdir.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 05: 6 SERVICE VERTICALS & CLIENT MATRIX -->
+      <section class="slide-section" id="slide-5" data-slide="5" aria-labelledby="h-slide-5">
+        <div class="dossier-bar">
+          <div class="dossier-bar-left">
+            <span class="dossier-pill">Slayd 05</span>
+            <span class="dossier-meta">İlkin Xidmət Portfeli · 6 Strateji Şaqul</span>
+          </div>
+          <span class="dossier-meta">P1 / P2 / P3 Prioritetləşdirmə</span>
+        </div>
+
+        <h2 class="section-heading" id="h-slide-5">Yeni şirkət üçün 6 geniş tibbi xidmət şaquli və müştəri seqmenti uyğunluğu</h2>
+        <p class="section-lede">Başlanğıc portfeli müştəri ehtiyaclarına əsaslanan 6 modula bölünür. Prioritetlər ilkin hipotezdir: hər modula klikləyərək ölçülə bilən nəticələri görün və ya aşağıdakı müştəri seqmenti filtrindən uyğun paketləri seçin.</p>
+
+        <div class="filter-toolbar">
+          <div class="filter-pills" role="group" aria-label="Müştəri seqmenti üzrə xidmət uyğunluğu">
+            <button type="button" class="tab-pill" data-seg="all" aria-pressed="true" onclick="filterSegment('all')">Bütün seqmentlər</button>
+            <button type="button" class="tab-pill" data-seg="clinics" aria-pressed="false" onclick="filterSegment('clinics')">Özəl klinikalar</button>
+            <button type="button" class="tab-pill" data-seg="labs" aria-pressed="false" onclick="filterSegment('labs')">Laboratoriyalar</button>
+            <button type="button" class="tab-pill" data-seg="pharma" aria-pressed="false" onclick="filterSegment('pharma')">Dərman / MAH</button>
+            <button type="button" class="tab-pill" data-seg="medtech" aria-pressed="false" onclick="filterSegment('medtech')">Tibb vasitəsi idxalçısı</button>
+            <button type="button" class="tab-pill" data-seg="payers" aria-pressed="false" onclick="filterSegment('payers')">Sığorta / Dövlət</button>
+          </div>
+        </div>
+
+        <div class="card-grid" id="verticals-grid">
+          <!-- Populated by JS -->
+        </div>
+
+        <div class="split-grid">
+          <div class="inspector-panel card-wrapper" id="vertical-inspector">
+            <div class="choice-card-head">
+              <span class="dossier-pill" id="vert-priority-pill">Prioritet P1</span>
+              <span class="dossier-meta" id="vert-code">Şaqul 01 / 06</span>
+            </div>
+            <h3 class="inspector-title" id="vert-title">Xəstəxana Akkreditasiyası və Klinik Keyfiyyət</h3>
+            <p class="inspector-subtitle" id="vert-need">Müştəri ehtiyacı: 2028 qaydasına hazırlıq, AZS ISO 7101, sənədləşmə və daxili audit</p>
+            <ul class="detail-list" id="vert-deliverables">
+              <!-- Populated by JS -->
+            </ul>
+          </div>
+
+          <div class="inspector-panel card-wrapper" id="segment-inspector">
+            <span class="dossier-pill dossier-pill--secondary" id="seg-badge">Seqment Profili · Bütün Seqmentlər</span>
+            <h3 class="inspector-title" id="seg-title">Kommersiya Modeli və Satış Mexanizmi</h3>
+            <p class="inspector-subtitle" id="seg-reason">Seçilmiş müştəri seqmenti üzrə alış səbəbi və ilkin müqavilə forması</p>
+            <ul class="detail-list" id="seg-details">
+              <!-- Populated by JS -->
+            </ul>
+            <div class="aside-box">
+              <span class="aside-label">Hipotez Sərhədi</span>
+              <span>Prioritetlər redaksiya xarakterli ilkin hipotezdir; real tələbat, müştəri büdcəsi və komanda kompetensiyası təsdiqlənmədən biznes-plan qərarı kimi qəbul olunmamalıdır.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 06: 12-MONTH ROADMAP -->
+      <section class="slide-section" id="slide-6" data-slide="6" aria-labelledby="h-slide-6">
+        <div class="dossier-bar">
+          <div class="dossier-bar-left">
+            <span class="dossier-pill">Slayd 06</span>
+            <span class="dossier-meta">12 Aylıq Fəaliyyət Xəritəsi · Sübutdan Miqyasa</span>
+          </div>
+          <span class="dossier-meta">4 Mərhələ · Qərar Qapıları</span>
+        </div>
+
+        <h2 class="section-heading" id="h-slide-6">Brendinq və investor təqdimatından əvvəl bazar sübutu və pilot diaqnostika gəlir</h2>
+        <p class="section-lede">12 aylıq plan missiya, ad və broşürlərdən əvvəl real müştəri müsahibələri, rəqib sorğuları və 1–2 həftəlik pilot diaqnostika ilə riskləri azaltmaq üzərində qurulub. Hər mərhələyə klikləyərək aylıq hədəfləri izləyin.</p>
+
+        <div class="gantt-grid" id="gantt-grid" aria-label="12 aylıq qrafik zolağı">
+          <!-- Populated by JS -->
+        </div>
+
+        <div class="roadmap-phase-row" role="group" aria-label="12 aylıq yol xəritəsi mərhələləri">
+          <button type="button" class="choice-card" data-phase="1" aria-pressed="true" onclick="selectPhase(1)">
+            <div class="choice-card-head">
+              <span class="index-num">MƏRHƏLƏ 01</span>
+              <span class="dossier-pill">Ay 01–02</span>
+            </div>
+            <span class="choice-title">Bazar Sübutu və Hüquqi Yoxlama</span>
+            <span class="choice-summary">15–25 müsahibə, 4–6 rəqib sorğusu, məxfilik və icazələrin hüquqi auditi.</span>
+          </button>
+
+          <button type="button" class="choice-card" data-phase="2" aria-pressed="false" onclick="selectPhase(2)">
+            <div class="choice-card-head">
+              <span class="index-num">MƏRHƏLƏ 02</span>
+              <span class="dossier-pill dossier-pill--secondary">Ay 03–04</span>
+            </div>
+            <span class="choice-title">Canlı Pilot Diaqnostika</span>
+            <span class="choice-summary">1 klinikada 1–2 həftəlik Keyfiyyət + İqtisadiyyat pilotu; 1 test dosye gap-analysis.</span>
+          </button>
+
+          <button type="button" class="choice-card" data-phase="3" aria-pressed="false" onclick="selectPhase(3)">
+            <div class="choice-card-head">
+              <span class="index-num">MƏRHƏLƏ 03</span>
+              <span class="dossier-pill dossier-pill--positive">Ay 05–07</span>
+            </div>
+            <span class="choice-title">Model Seçimi və Kommersiya Startı</span>
+            <span class="choice-summary">A/B/C qərarı, 3 əsas şaqul, korporativ sayt, 10–12 slaydlıq investor təqdimatı.</span>
+          </button>
+
+          <button type="button" class="choice-card" data-phase="4" aria-pressed="false" onclick="selectPhase(4)">
+            <div class="choice-card-head">
+              <span class="index-num">MƏRHƏLƏ 04</span>
+              <span class="dossier-pill dossier-pill--tertiary">Ay 08–12</span>
+            </div>
+            <span class="choice-title">Retainer, 2028 Dalğası və Akademiya</span>
+            <span class="choice-summary">Aylıq PV/KPI retainerləri, 2028 akkreditasiya layihələri, Təlim və HTA pilotu.</span>
+          </button>
+        </div>
+
+        <div class="split-grid">
+          <div class="inspector-panel card-wrapper">
+            <span class="dossier-pill" id="phase-badge">Mərhələ 01 · Ay 01–02</span>
+            <h3 class="inspector-title" id="phase-title">Sübut Toplama, Müsahibələr və Hüquqi Çərçivə</h3>
+            <p class="inspector-subtitle" id="phase-sub">Təqdimat və broşürdən əvvəl tələb olunan təsdiqlər</p>
+            <ul class="detail-list" id="phase-tasks">
+              <!-- Populated by JS -->
+            </ul>
+          </div>
+
+          <div class="inspector-panel card-wrapper">
+            <span class="dossier-pill dossier-pill--secondary">Qərar Qapısı və Resurslar</span>
+            <h3 class="inspector-title" id="phase-gate-title">Növbəti Mərhələyə Keçid Şərti</h3>
+            <p class="inspector-subtitle" id="phase-gate-sub">Ölçülə bilən təsdiq meyarı</p>
+            <div class="aside-box">
+              <span class="aside-label">Keçid Meyarı (Gate)</span>
+              <span id="phase-gate-text"></span>
+            </div>
+            <div class="aside-box">
+              <span class="aside-label">Əsas İştirakçı Rollar</span>
+              <span id="phase-roles"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 07: RISKS, BOUNDARIES & TEAM -->
+      <section class="slide-section" id="slide-7" data-slide="7" aria-labelledby="h-slide-7">
+        <div class="dossier-bar">
+          <div class="dossier-bar-left">
+            <span class="dossier-pill">Slayd 07</span>
+            <span class="dossier-meta">Risklər, Səlahiyyət Sərhədləri və Minimum Komanda</span>
+          </div>
+          <span class="dossier-meta">İdarəetmə və Uyğunluq Çərçivəsi</span>
+        </div>
+
+        <h2 class="section-heading" id="h-slide-7">Səlahiyyət sərhədlərinin qorunması və minimum 5 nəfərlik ekspert nüvəsi</h2>
+        <p class="section-lede">Səhiyyə konsaltinqi yüksək tənzimlənən sahədir. Dövlət orqanlarının və müstəqil sertifikatlaşdırma qurumlarının səlahiyyətlərini əvəz edən vədlərdən qaçmaq kommersiya etibarlılığının əsasıdır.</p>
+
+        <div class="split-grid">
+          <div class="inspector-panel card-wrapper">
+            <span class="dossier-pill dossier-pill--tertiary">Hüquqi və Etik Sərhədlər</span>
+            <h3 class="inspector-title">5 Qırmızı Xətt və Risk Nəzarəti</h3>
+            <ul class="detail-list">
+              <li><strong>Dövlət akkreditasiyası və sertifikasiyası:</strong> Konsaltinq şirkəti özünü dövlət akkreditasiyasını və ya tibb mütəxəssisinin rəsmi sertifikasiyasını həyata keçirən orqan kimi təqdim etməməlidir.</li>
+              <li><strong>ISO sertifikatlaşdırma müstəqilliyi:</strong> ISO sertifikatı yalnız akkreditasiyalı sertifikatlaşdırma orqanı tərəfindən verilir; konsultantla sertifikat verən orqan arasında qərəzsizlik sərhədi qorunmalıdır.</li>
+              <li><strong>“100% zəmanət” qadağası:</strong> Dərman və cihaz qeydiyyatında hüquqi nəticə və ya müddət barədə qəti zəmanət verilməməlidir — tənzimləyici qərar yalnız səlahiyyətli qurumlara aiddir.</li>
+              <li><strong>Məlumat təhlükəsizliyi:</strong> Pasiyent, resept və dərman təhlükəsizliyi məlumatlarında məxfilik, fərdi məlumatların qorunması, giriş nəzarəti və audit izi təmin edilməlidir.</li>
+              <li><strong>Maraqlar toqquşması:</strong> Dövlət və özəl sektor müqavilələrində dövlət vəzifəsi ilə uyğunluq, məxfi məlumatdan istifadə və satınalma qaydaları hüquqşünasla qiymətləndirilməlidir.</li>
+            </ul>
+          </div>
+
+          <div class="inspector-panel card-wrapper">
+            <span class="dossier-pill dossier-pill--secondary">Minimum Komanda Arxitekturası</span>
+            <h3 class="inspector-title">5 Əsas Daxili Rol + Ekspert Şəbəkəsi</h3>
+            <div class="choice-list" role="group" aria-label="Minimum komanda rolları">
+              <button type="button" class="choice-card" data-role="quality" aria-pressed="true" onclick="selectTeamRole('quality')">
+                <div class="choice-card-head">
+                  <span class="index-num">ROL 01</span>
+                  <span class="choice-title">Klinik Keyfiyyət və Audit Eksperti</span>
+                </div>
+                <span class="choice-summary" id="role-desc-quality">2028 dövlət akkreditasiyası, AZS ISO 7101:2025, gap-analysis, SOP paketi və mock audit icrası.</span>
+              </button>
+
+              <button type="button" class="choice-card" data-role="rapv" aria-pressed="false" onclick="selectTeamRole('rapv')">
+                <div class="choice-card-head">
+                  <span class="index-num">ROL 02</span>
+                  <span class="choice-title">RA-PV Mütəxəssisi</span>
+                </div>
+                <span class="choice-summary">Dərman qeydiyyatı dosyeleri, AEM ekspertiza müşayiəti, QPPV/PSMF/PSUR/RMP sistemləri.</span>
+              </button>
+
+              <button type="button" class="choice-card" data-role="medtech" aria-pressed="false" onclick="selectTeamRole('medtech')">
+                <div class="choice-card-head">
+                  <span class="index-num">ROL 03</span>
+                  <span class="choice-title">Tibbi Cihaz QMS Eksperti</span>
+                </div>
+                <span class="choice-summary">Risk sinfi təsnifatı, texniki fayl xəritəsi, ISO 13485:2016 və post-market vigilance.</span>
+              </button>
+
+              <button type="button" class="choice-card" data-role="finance" aria-pressed="false" onclick="selectTeamRole('finance')">
+                <div class="choice-card-head">
+                  <span class="index-num">ROL 04</span>
+                  <span class="choice-title">Səhiyyə Maliyyəsi və Analitika Eksperti</span>
+                </div>
+                <span class="choice-summary">Maya dəyəri, tarif modelləşdirilməsi, kassa axını, KPI dashboard və HTA/BIA prototipləri.</span>
+              </button>
+
+              <button type="button" class="choice-card" data-role="legal" aria-pressed="false" onclick="selectTeamRole('legal')">
+                <div class="choice-card-head">
+                  <span class="index-num">ROL 05</span>
+                  <span class="choice-title">Hüquq və Uyğunluq Məsləhətçisi</span>
+                </div>
+                <span class="choice-summary">Satınalma qaydaları, maraqlar toqquşması, məxfilik (PDPL), müqavilə sərhədləri + müqaviləli ekspert şəbəkəsi.</span>
+              </button>
+            </div>
+            <div class="aside-box">
+              <span class="aside-label">Seçilmiş Rol Fokus Qeydi</span>
+              <span id="team-role-note">Klinik Keyfiyyət və Audit Eksperti ilk 6 ayda P1 modullarının (2028 akkreditasiya və ISO 7101) və pilot diaqnostikanın əsas daşıyıcısıdır.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- BOTTOM DECK STEPPER -->
+    <div class="slide-footer-nav">
+      <button type="button" class="btn btn-secondary" id="btn-prev-bottom" onclick="stepSlide(-1)">← Əvvəlki slayd</button>
+      <span class="dossier-meta" id="bottom-slide-indicator">Slayd 01 / 07 · Tam oxu rejimi</span>
+      <button type="button" class="btn btn-primary" id="btn-next-bottom" onclick="stepSlide(1)">Növbəti slayd →</button>
+    </div>
+
+    <!-- SOURCES & METHODOLOGY FOOTER -->
+    <footer class="dossier-footer">
+      <div>
+        <span class="aside-label">Mənbələr və İstinadlar (17.11.2026 tarixinədək açıq veb-mənbələr)</span>
+        <p class="sources-text">
+          Bu strateji təqdimat “Tibbi Konsaltinq Bazar Arayışı 2026” sənədinə, Makromed.az rəsmi saytına (Bakı, Hindistan və Özbəkistan bölmələri) və PHARMAGATE rəsmi saytına əsaslanır. Normativ hissədə Azərbaycan Respublikası Nazirlər Kabinetinin 09.07.2026 tarixli qərarı (qüvvəyə minmə: 01.01.2028), NK-nın 25.12.2019 tarixli 502 nömrəli qərarı, praktik tibb və əczaçılıq sertifikasiyası qaydaları, AZSTAND (AZS ISO 7101:2025), Antiinhisar və İstehlak Bazarına Nəzarət Dövlət Agentliyi (AZS ISO 15189:2024) və ISO 13485:2016 sənədlərindən istifadə edilib. Rəqib və benchmark məlumatları RegBridge, PharmExpert Azerbaijan, FRH LLC, Nexa Pharm, Pharmcontrol, Insuvia Azerbaijan, Uptodate in Medicine (UiM), UHY Azerbaijan, Health &amp; Science Initiatives, TÜV AUSTRIA Azerbaijan, Səhhət Klinikası / Keyfiyyət Assosiasiyası / INCERT, SGS Azerbaijan, JCI Advisory, DNV Healthcare, IQVIA, Cencora/PharmaLex, Emergo by UL, RQM+, Cratia və European Accreditation səhifələrindən götürülüb.
+        </p>
+      </div>
+      <div class="aside-box">
+        <span class="aside-label">Metodoloji Məhdudiyyət</span>
+        <p class="sources-text">
+          Sənəd tam bazar reyestri deyil. Qiymət təklifləri və kommersiya müqavilələri ictimai olmadığı üçün qiymət sıralaması aparılmayıb. Şirkətlərin veb-saytlarındakı təsvirlər müstəqil audit nəticəsi kimi deyil, elan olunan xidmət profili kimi qiymətləndirilməlidir. Hüquqi aktların qüvvədə olan son redaksiyası rəsmi reyestrdən təkrar yoxlanmalıdır.
+        </p>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    /* ================================================================
+       DATA STRUCTURES (Backtick literals throughout for apostrophe safety)
+       ================================================================ */
+    const SLIDE_NAMES = [
+      `İcra Xülasəsi və Strateji Tezis`,
+      `Azərbaycanda Normativ-Tənzimləyici Mühit (2026–2028)`,
+      `Prioritet Benchmarklar: Makromed MMC və PHARMAGATE`,
+      `Qlobal və Yerli Rəqabət Müqayisə Matrisi`,
+      `Yeni Şirkət Üçün 6 Geniş Tibbi Xidmət Şaquli`,
+      `12 Aylıq Strateji Fəaliyyət Xəritəsi`,
+      `Risklər, Səlahiyyət Sərhədləri və Minimum Komanda`
+    ];
+
+    const STRATEGY_OPTIONS = {
+      A: {
+        badge: `Variant A · Klinika və İqtisadiyyat`,
+        title: `Klinikaların akkreditasiyası və maliyyə səmərəliliyi`,
+        sub: `2028 Dövlət Akkreditasiyası və AZS ISO 7101 dalğasına fokuslanan giriş`,
+        points: [
+          `01.01.2028 tarixli dövlət akkreditasiyasına hazırlıq və AZS ISO 7101:2025 / AZS ISO 15189:2024 sistemlərinin qurulması əsas xidmət lokomotividir.`,
+          `Özəl klinika və diaqnostika şəbəkələrinə maya dəyəri, tarif modelləşdirilməsi və kassa axını diaqnostikası ilə konkret iqtisadi geri dönüş göstərilir.`,
+          `Yerli RA/PV bazarındakı yüksək rəqabətə dərhal girmədən klinika və laboratoriya seqmentində möhkəmlənməyə imkan verir.`
+        ],
+        note: `Güclü tərəfi: Maliyyə + Keyfiyyət birləşməsi bazarda azdır. Risk: Pharma/MedTech retainer axınlarından ilkin mərhələdə kənarda qalmaq.`
+      },
+      B: {
+        badge: `Variant B · Dərman və Cihaz RA/PV`,
+        title: `Dərman və tibb vasitələri üzrə tənzimləyici uyğunluq`,
+        sub: `Qeydiyyat, PV autsorsinqi və ISO 13485 hazırlığı üzrə ixtisaslaşma`,
+        points: [
+          `Dərman istehsalçıları (MAH) və tibb vasitəsi idxalçıları üçün aylıq sabit PV retainerləri və dosye layihə haqları sürətli dövriyyə yarada bilər.`,
+          `Makromed, RegBridge, PharmExpert, Nexa Pharm, Pharmcontrol, FRH və Insuvia kimi formalaşmış rəqiblərlə birbaşa müqayisə olunur.`,
+          `Fərqlənmək üçün güclü Market Access, HTA/BIA və ya MedTech ISO 13485 + post-market vigilance dərinliyi tələb edir.`
+        ],
+        note: `Güclü tərəfi: Aydın və öyrəşilmiş bazar tələbi. Risk: Yüksək rəqabətli seqmentdə qiymət təzyiqi.`
+      },
+      C: {
+        badge: `Variant C · İnteqrasiya Modeli`,
+        title: `Ölçülə bilən kəsişmə: Keyfiyyət × Maliyyə × Uyğunluq`,
+        sub: `Tövsiyə olunan başlanğıc strategiyası (pilot və müsahibə ilə təsdiqlənməlidir)`,
+        points: [
+          `Müştəriyə ayrıca sənəd toplusu yox, xəstəxana keyfiyyətini, tibbi xərcləri və məhsul uyğunluğunu eyni idarəetmə panelində birləşdirən nəticə təklif olunur.`,
+          `Modul xidmətlər (akkreditasiya hazırlığı, ISO QMS, klinika maliyyə konsaltinqi, RA/PV ekspertizası) başlanğıcda ayrı-ayrı test edilir.`,
+          `Əsas şərt: klinik konsultasiya ilə RA-PV funksiyasını iki ayrı texniki komanda daşımalı, hər ikisində yüksək ixtisas qorunmalıdır.`
+        ],
+        note: `Bütün xidmət iddiaları açıq veb-saytlara əsaslanır; müştəri sayı, dövriyyə və real uğur faizləri müstəqil audit edilməyib. İlk 12 ay qərarı 15–25 bazar müsahibəsindən sonra verilməlidir.`
+      }
+    };
+
+    const REG_DETAILS = {
+      acc2028: {
+        badge: `Normativ Çərçivə · 01.01.2028`,
+        title: `Dövlət Akkreditasiya Qaydası (NK 09.07.2026)`,
+        sub: `Təsdiqlənən vəziyyət və konsaltinq bazarına birbaşa təsiri`,
+        points: [
+          `Təsdiqlənən vəziyyət: 09.07.2026 tarixli yeni redaksiya 01.01.2028 tarixindən qüvvəyə minir.`,
+          `Konsaltinq xidmətləri: gap-analysis, özünüqiymətləndirmə matrisi, SOP və sənəd hazırlığı, mock (sınaq) audit.`,
+          `Mərhələli hazırlıq tibb müəssisələrinə 2028 tarixinə qədər əməliyyat boşluqlarını bağlamağa imkan verir.`
+        ],
+        warning: `2028-ci il üçün nəzərdə tutulan yeni qaydanın detalları həmin tarixdən əvvəlki prosedurlara avtomatik tətbiq edilə bilməz. Müqavilələrdə qüvvəyəminmə tarixi və hüquqi uyğunluq yoxlaması mütləq göstərilməlidir. Şirkət “akkreditasiya/sertifikat verir” yox, “hazırlayır və müşayiət edir” mövqeyini tutmalıdır.`
+      },
+      iso7101: {
+        badge: `Milli Standart · AZSTAND`,
+        title: `AZS ISO 7101:2025 — Səhiyyə Təşkilatlarında Keyfiyyət`,
+        sub: `Klinika və xəstəxanalarda ölçülə bilən idarəetmə sistemi`,
+        points: [
+          `Təsdiqlənən vəziyyət: Səhiyyə təşkilatlarında keyfiyyət idarəetməsi üzrə milli standart qəbul edilib (AZSTAND).`,
+          `Konsaltinq imkanı: Klinika və xəstəxanalarda keyfiyyət sisteminin və ölçülə bilən KPI-ların qurulması.`,
+          `Ekosistem nümunəsi: Keyfiyyət Assosiasiyası / INCERT və Səhhət Klinikası üzrə ISO 7101 təqdimatı bazarda marağın yarandığını göstərir.`
+        ],
+        warning: `Konsaltinq şirkəti yalnız tətbiq və hazırlıq xidməti göstərir; rəsmi ISO uyğunluq sertifikatı müvafiq akkreditasiyalı sertifikatlaşdırma orqanı tərəfindən verilir.`
+      },
+      iso15189: {
+        badge: `Milli Standart · Laboratoriya`,
+        title: `AZS ISO 15189:2024 — Tibbi Laboratoriyalar`,
+        sub: `Keyfiyyət və texniki səriştəlilik üzrə hazırlıq paketi`,
+        points: [
+          `Təsdiqlənən vəziyyət: Tibbi laboratoriyalarda keyfiyyət və səriştəlilik üzrə milli standart kimi qüvvədədir.`,
+          `Konsaltinq imkanı: Laboratoriya keyfiyyət sistemi, metod validasiyası sənədləri, daxili audit və akkreditasiyaya hazırlıq.`,
+          `Hədəf qrupu: Müstəqil diaqnostika şəbəkələri və xəstəxana daxili klinik laboratoriyalar.`
+        ],
+        warning: `Laboratoriya avadanlığı və reaktivlərin kalibrlənməsi/validasiyası texniki icra tələb edir; konsultant sənəd və proses arxitekturasını qurur, laboratoriya işçisinin yerinə faktiki analiz nəticəsi imzalamır.`
+      },
+      iso13485: {
+        badge: `Beynəlxalq Standart · MedTech`,
+        title: `ISO 13485:2016 — Tibb Cihazları QMS`,
+        sub: `İstehsalçı və uyğun profilli təchizatçılar üçün keyfiyyət sistemi`,
+        points: [
+          `Təsdiqlənən vəziyyət: Tibb cihazlarının keyfiyyət idarəetməsi üçün əsas beynəlxalq standartdır.`,
+          `Konsaltinq imkanı: İstehsalçı və uyğun profilli təchizatçılarda QMS hazırlığı, texniki fayl və post-market nəzarət mexanizmləri.`,
+          `Ekosistem qeydi: TÜV Austria Azerbaijan ISO 13485 üzrə sertifikatlaşdırma tərəfdaşı kimi çıxış edir, konsultantla eyni rol deyil.`
+        ],
+        warning: `Standartın tətbiq oluna bilməsi müəssisənin konkret fəaliyyət növünə (istehsal, idxal, yoxsa distribusiya) görə əvvəlcədən hüquqi-texniki yoxlanmalıdır.`
+      }
+    };
+
+    const BENCHMARKS = {
+      makromed: {
+        tag: `Makromed MMC · Azərbaycan (2013-dən)`,
+        blocks: [
+          {
+            id: `m_reg`,
+            code: `BLOK 01`,
+            title: `Dərman qeydiyyatı`,
+            scope: `İlkin/yenidən qeydiyyat, variasiya, dosye hazırlığı, AEM-də iki mərhələli (ilkin və ixtisaslaşdırılmış) ekspertiza müşayiəti (NK Qərarı № 502).`,
+            details: [
+              `Yerli və xarici istehsalçıların dərman vasitələrinin dövlət qeydiyyatına alınması.`,
+              `Qeydiyyat sənədlərinin formalaşdırılması və dəyişikliklərin (variasiyaların) qeydə alınması.`,
+              `Səlahiyyətli orqanlarla peşəkar kommunikasiya və nəticəyə qədər müşayiət.`
+            ],
+            lesson: `Biznes dərsi: Standartlaşdırılmış checklist + layihə koordinasiyası modeli. Qeyd: Klinikaların maliyyə səmərəliliyi və HTA Makromed-in əsas veb-vurğusu deyil.`
+          },
+          {
+            id: `m_med`,
+            code: `BLOK 02`,
+            title: `Tibb vasitələri və BAQM`,
+            scope: `Risk sinfi təhlili, ISO 13485/CE və uyğunluq sənədlərinin yoxlanılması; etiket, təlimat, BAQM (BFMQƏ) və kosmetika qeydiyyatı.`,
+            details: [
+              `Tibb vasitələrinin dövlət qeydiyyatı və yenidən qeydiyyatı üçün texniki/uyğunluq qiymətləndirilməsi.`,
+              `Bioloji Aktiv Qida Məhsulları (BAQM) üzrə tərkib, etiket və qablaşdırmanın normativ yoxlanması.`,
+              `Gigiyenik və kosmetik vasitələr üzrə əlavə məhsul kateqoriyalarının əhatə edilməsi.`
+            ],
+            lesson: `Biznes dərsi: Tibb cihazları və BAQM üçün dərmanlardan ayrılmış ayrıca “regulatory pathway” paketi qurmaq satış çevikliyini artırır.`
+          },
+          {
+            id: `m_pv`,
+            code: `BLOK 03`,
+            title: `Farmakonəzarət (PV)`,
+            scope: `Əlavə təsir bildirişləri (onlayn forma), PSMF, PSUR, RMP, QPPV/məsul şəxs sənədləri, monitorinq və tənzimləyici yazışma.`,
+            details: [
+              `NK № 502-də tələb olunan PV sisteminin qısa xülasəsi və məsul şəxsin təyinat sənədləri.`,
+              `Dərman və vaksinlərin istifadəsi zamanı yaranan əlavə təsirlərin onlayn toplanması və emalı.`,
+              `Vəsiqə sahibi üçün təchizat və PSMF mövcudluğu üzrə arayışların hazırlanması.`
+            ],
+            lesson: `Biznes dərsi: Farmakonəzarət birdəfəlik layihə deyil, davamlı aylıq autsorsinq (retainer) gəlir mənbəyidir.`
+          },
+          {
+            id: `m_price`,
+            code: `BLOK 04`,
+            title: `Bazar və qiymət təhlili`,
+            scope: `Etibarlı statistik mənbələrə əsaslanan əczaçılıq bazarı araşdırması, dərman qiyməti təhlili və Tarif Şurası proseslərinin müşayiəti.`,
+            details: [
+              `Azərbaycan əczaçılıq bazarının məhsul qrupları üzrə analitik icmalı.`,
+              `Dərman qiymətlərinin dövlət tənzimlənməsi (Tarif Şurası) mərhələlərində sənəd dəstəyi.`,
+              `Müştəri məhsulları üçün bazara çıxış hazırlığı.`
+            ],
+            lesson: `Biznes dərsi: Regulatory xidmətləri ilə pricing / market access məsləhətini əlaqələndirmək istehsalçı üçün vahid dəyər yaradır.`
+          },
+          {
+            id: `m_design`,
+            code: `BLOK 05`,
+            title: `Tibbi obyekt layihələndirməsi`,
+            scope: `Aptek, klinika, tibbi mərkəz, laboratoriya və anbar üçün funksional planlaşdırma, sanitariya-gigiyena və lisenziyaya hazırlıq.`,
+            details: [
+              `Müəssisənin lisenziya alması üçün texniki planların normativ tələblərə uyğun hazırlanması.`,
+              `Səhiyyə və əczaçılıq obyektlərinin qurulması prosesinin peşəkar müşayiəti.`
+            ],
+            lesson: `Biznes dərsi: Klinika quruculuğunu lisenziya + akkreditasiya + maliyyə modeli ilə paketləmək böyük layihə imkanı açır.`
+          },
+          {
+            id: `m_tech`,
+            code: `BLOK 06`,
+            title: `Təlim və rəqəmsal kabinet`,
+            scope: `GMP/GDP/GxP mövzularında təlimlər (o cümlədən tibb vasitələri təlimi), şirkətin öz qeydiyyat/PV izləmə kabineti; AZ, IN (2022), UZ (2023) əhatəsi.`,
+            details: [
+              `Müştəri kabineti vasitəsilə qeydiyyat və PV proseslərinin rəqəmsal izlənməsi.`,
+              `Azərbaycanla yanaşı Hindistan və Özbəkistanda rəsmi əhatə dairəsinin elan olunması.`
+            ],
+            lesson: `Biznes dərsi: Təlim + rəqəmsal izləmə aləti xidməti rəqiblərdən fərqləndirir. Lakin klinika maliyyə modelləşdirilməsi və HTA hələ də açıq boşluqdur.`
+          }
+        ]
+      },
+      pharmagate: {
+        tag: `PHARMAGATE · Ukrayna / Regional (2011-dən)`,
+        blocks: [
+          {
+            id: `p_cons`,
+            code: `XƏTT 01`,
+            title: `Regulatory Consulting`,
+            scope: `Ölkə qanunvericiliyi və bazara çıxış yolu; qeydiyyat strategiyası; prosedur, tələb və risk xəritəsinin qurulması.`,
+            details: [
+              `Avrasiya regionu (12 ölkə) üzrə bir ölkə və ya bütün region üçün bazar giriş yolunun xəritələndirilməsi.`,
+              `50-dən çox istehsalçı ilə əməkdaşlıq və 15 illik tənzimləyici dəyişiklik təcrübəsi (sayt təqdimatı).`
+            ],
+            lesson: `Biznes dərsi: Dosye təqdim etməzdən əvvəl “bazara çıxış strategiyası və risk xəritəsi”ni ayrıca ödənişli mərhələ kimi satmaq.`
+          },
+          {
+            id: `p_ra`,
+            code: `XƏTT 02`,
+            title: `Regulatory Affairs (9 kateqoriya)`,
+            scope: `Dərmanlar, immunobioloji məhsullar, tibbi məmulatlar, bioloji aktiv maddələr, qida əlavələri, gigiyena, baytarlıq/dezinfeksiya, avadanlıq, kosmetika.`,
+            details: [
+              `Geniş məhsul spektrində dosye uyğunluğunun yoxlanması və səlahiyyətli qurumlarla iş.`,
+              `Qısa müddətdə mürəkkəb tənzimləyici tapşırıqların mərkəzləşdirilmiş layihə idarəçiliyi.`
+            ],
+            lesson: `Biznes dərsi: Tibbi avadanlıq, dezinfeksiya və immunobioloji məhsullar kimi niş kateqoriyalar portfeli şaxələndirir.`
+          },
+          {
+            id: `p_lc`,
+            code: `XƏTT 03`,
+            title: `Lifecycle Management`,
+            scope: `Qeydiyyatdan sonrakı dəyişikliklər, variasiya, təkrar qeydiyyat, keyfiyyət monitorinqi və uzunmüddətli portfel koordinasiyası.`,
+            details: [
+              `Məhsulun hazırlanmasından bazarda qalmasına qədər hər mərhələdə fasiləsiz müşayiət.`,
+              `Regionda qanunvericilik dəyişikliklərinin izlənməsi və portfelin uyğunlaşdırılması.`
+            ],
+            lesson: `Biznes dərsi: Birdəfəlik qeydiyyat agentliyindən uzunmüddətli “həyat dövrü tərəfdaşı” modelinə keçid sabit gəlir təmin edir.`
+          },
+          {
+            id: `p_pv`,
+            code: `XƏTT 04`,
+            title: `Pharmacovigilance və Təhlükəsizlik`,
+            scope: `Yerli təhlükəsizlik sisteminin qurulması, əlavə təsir (PR) emalı, məlumat bazası, periodik hesabat, ədəbiyyat izləmə, audit və təlim.`,
+            details: [
+              `Sənəd dövriyyəsi və təhlükəsizlik siqnallarının fasiləsiz monitorinqi.`,
+              `Auditə hazırlıq və yerli tələblərə uyğun hesabatlılıq.`
+            ],
+            lesson: `Biznes dərsi: Ədəbiyyat monitorinqi və PV auditi əlavə dəyər yaradan xidmət paketləridir.`
+          },
+          {
+            id: `p_train`,
+            code: `XƏTT 05`,
+            title: `Training Center və Regional Şəbəkə`,
+            scope: `Regulatory specialist, PV specialist, GCP, GMP giriş və dərman keyfiyyəti üzrə açıq/korporativ təlimlər; Ukrayna, Qafqaz (o cümlədən Azərbaycan) və Mərkəzi Asiya şəbəkəsi.`,
+            details: [
+              `Özəl təlim mərkəzi vasitəsilə sənaye mütəxəssislərinin hazırlanması və brend etibarlılığı.`,
+              `Mühüm sərhəd: Sayt geniş regional coğrafiya göstərsə də, Azərbaycanda ayrıca hüquqi şəxsinin və konkret layihə nəticələrinin mövcudluğu bu arayışda müstəqil təsdiqlənməyib.`
+            ],
+            lesson: `Biznes dərsi: Təlim akademiyası həm gəlir xətti, həm də potensial B2B müştərilərlə əlaqə kanalı kimi işləyir.`
+          }
+        ]
+      }
+    };
+
+    const COMPETITORS = [
+      { id: `iqvia`, name: `IQVIA`, scope: `Qlobal`, cat: `global`, ra: 2, med: 1, clin: 0, econ: 2, train: 1, lesson: `HTA, pricing, reimbursement, health economics və analitika — yerli bazarda iqtisadi sübut, payer və bazara çıxış analitikası modeli.` },
+      { id: `jci`, name: `JCI Advisory`, scope: `Qlobal (ABŞ)`, cat: `global`, ra: 0, med: 0, clin: 2, econ: 0, train: 2, lesson: `Xəstəxana akkreditasiyasına hazırlıq, baseline assessment, mock survey və pasiyent təhlükəsizliyi üzrə ölçülə bilən mərhələli transformasiya.` },
+      { id: `dnv`, name: `DNV Healthcare`, scope: `Qlobal (Norveç)`, cat: `global`, ra: 0, med: 1, clin: 2, econ: 0, train: 2, lesson: `Sağlamlıq müəssisələrinin müstəqil akkreditasiyası və sertifikatlaşdırılması — konsultasiya ilə müstəqil qiymətləndirmənin sərhədini qorumaq nümunəsi.` },
+      { id: `emergo`, name: `Emergo by UL`, scope: `Qlobal`, cat: `global`, ra: 0, med: 2, clin: 0, econ: 1, train: 2, lesson: `MedTech/IVD RA, QMS, cihaz qeydiyyatı və post-market dəstək — tibb cihazları üçün ayrıca ekspert komanda və rəqəmsal alətlər modeli.` },
+      { id: `cratia`, name: `Cratia`, scope: `Ukrayna / 12 ölkə`, cat: `global`, ra: 2, med: 2, clin: 0, econ: 0, train: 1, lesson: `12 ölkədə RA, PV, GMP/GDP/ISO 13485 uyğunluq; distribusiyadan ayrılmış müstəqil model və maraqlar toqquşmasına qarşı siyasət.` },
+      { id: `pharmalex`, name: `Cencora / PharmaLex`, scope: `Qlobal`, cat: `global`, ra: 2, med: 1, clin: 0, econ: 1, train: 1, lesson: `Regulatory, safety/PV, quality compliance və market access — end-to-end əczaçılıq xidmət portfeli.` },
+      { id: `makromed`, name: `Makromed`, scope: `Azərbaycan`, cat: `local_ra`, ra: 2, med: 2, clin: 1, econ: 1, train: 2, lesson: `Birləşmiş RA/PV, tibbi obyekt layihələndirməsi, bazar təhlili və təlim modeli; lakin klinika maliyyəsi və HTA əsas veb-vurğu deyil.` },
+      { id: `pharmagate`, name: `PHARMAGATE`, scope: `Ukrayna / Regional`, cat: `local_ra`, ra: 2, med: 2, clin: 0, econ: 0, train: 2, lesson: `Həyat dövrü boyu xidmət və özəl təlim mərkəzi; Azərbaycanda ayrıca hüquqi şəxsi və real portfeli müstəqil təsdiqlənməyib.` },
+      { id: `regbridge`, name: `RegBridge`, scope: `Azərbaycan / Regional`, cat: `local_ra`, ra: 2, med: 2, clin: 0, econ: 0, train: 0, lesson: `Dosye gap-analysis, reyestr müraciətləri, EAEU prosesləri, lifecycle və PV — yerli bazadan regional miqyas.` },
+      { id: `pharmexpert`, name: `PharmExpert`, scope: `Azərbaycan`, cat: `local_ra`, ra: 2, med: 1, clin: 0, econ: 0, train: 2, lesson: `PV sistemləri, QPPV, PSMF, PSUR/RMP, device incidents və dərman qeydiyyatı — PV üzrə dərin texniki ixtisas.` },
+      { id: `nexa`, name: `Nexa Pharm`, scope: `Azərbaycan`, cat: `local_ra`, ra: 2, med: 0, clin: 0, econ: 1, train: 0, lesson: `Qeydiyyat, dərman qiymətləri, bazara çıxış, tender, kommersiyalaşma və PV — regulatory + commercial market access birləşməsi.` },
+      { id: `uim`, name: `UiM / Uptodate`, scope: `Azərbaycan`, cat: `clinic`, ra: 0, med: 0, clin: 2, econ: 1, train: 2, lesson: `Xəstəxana akkreditasiyasına hazırlıq, idarəetmə, performans, e-health, təlim və pasiyent məmnuniyyəti — birbaşa klinika rəqibi.` },
+      { id: `uhy`, name: `UHY Azerbaijan`, scope: `Azərbaycan`, cat: `clinic`, ra: 0, med: 1, clin: 2, econ: 2, train: 0, lesson: `Səhiyyə və pharma üçün maliyyə/əməliyyat təhlili, risk, audit, contract analysis və strategiya — iqtisadi/idarəetmə konsaltinqi.` },
+      { id: `rqm`, name: `RQM+`, scope: `Qlobal`, cat: `clinic`, ra: 0, med: 2, clin: 0, econ: 1, train: 1, lesson: `Tibb cihazları üzrə regulatory, klinik, keyfiyyət və reimbursement — device lifecycle + kompensasiya sinerjisi.` }
+    ];
+
+    const VERTICALS = [
+      {
+        id: `v1`,
+        code: `Şaqul 01 / 06`,
+        priority: `P1 · Əsas Başlanğıc`,
+        pillClass: ``,
+        title: `Xəstəxana Akkreditasiyası və Klinik Keyfiyyət`,
+        shortDesc: `2028 Dövlət Akkreditasiyası və AZS ISO 7101:2025 üzrə kompleks hazırlıq, sənədləşmə və sınaq auditi.`,
+        need: `2028 qaydasına hazırlıq, AZS ISO 7101:2025, sənədləşmə və daxili audit`,
+        segments: [`clinics`, `payers`],
+        deliverables: [
+          `Mövcud vəziyyət üzrə uyğunluq xəritəsi (Gap-Analysis) və özünüqiymətləndirmə hesabatı`,
+          `Klinik və əməliyyat risk reyestrinin formalaşdırılması`,
+          `Standart Əməliyyat Prosedurları (SOP) paketi və tədbirlər planı`,
+          `Akkreditasiya öncəsi Mock Audit (sınaq yoxlama) hesabatı və düzəliş izləməsi`
+        ]
+      },
+      {
+        id: `v2`,
+        code: `Şaqul 02 / 06`,
+        priority: `P1 + P3 · İqtisadi Nüvə`,
+        pillClass: ``,
+        title: `Maliyyə, Tarif və HTA Analitikası`,
+        shortDesc: `Klinika maya dəyəri, tarif modelləşdirilməsi, kassa axını, KPI dashboard və HTA/farmakoiqtisadiyyat.`,
+        need: `Xidmət maya dəyəri, tarif, kassa axını, satınalma, inventar, performans və BIA/CEA sübutu`,
+        segments: [`clinics`, `pharma`, `payers`],
+        deliverables: [
+          `P1: Klinika maliyyə və əməliyyat diaqnostikası, şöbə/xidmət üzrə xərclər matrisi`,
+          `P1: Tarif və marjinallıq modeli, satınalma/inventar nəzarəti və KPI dashboard`,
+          `P1: 12 aylıq əməliyyat səmərəliliyi fəaliyyət planı`,
+          `P3 (HTA): Dərman və texnologiya üzrə büdcəyə təsir (BIA) və xərc-effektivlik (CEA) prototipi (ayrıca metodoloji ekspertlə)`
+        ]
+      },
+      {
+        id: `v3`,
+        code: `Şaqul 03 / 06`,
+        priority: `P1 / P2 · Laboratoriya`,
+        pillClass: `dossier-pill--positive`,
+        title: `Laboratoriya Keyfiyyəti (AZS ISO 15189:2024)`,
+        shortDesc: `Tibbi laboratoriyalarda keyfiyyət idarəetməsi, metod validasiyası və akkreditasiyaya hazırlıq.`,
+        need: `AZS ISO 15189:2024 hazırlığı, proses səmərəliliyi və keyfiyyət göstəriciləri`,
+        segments: [`labs`, `clinics`],
+        deliverables: [
+          `AZS ISO 15189:2024 üzrə Gap Assessment və uyğunluq yol xəritəsi`,
+          `Pre-analitik, analitik və post-analitik prosedur və validasiya sənədlərinə dəstək`,
+          `Laboratoriya keyfiyyət göstəricilərinin (KPI) qurulması və daxili audit hesabatı`
+        ]
+      },
+      {
+        id: `v4`,
+        code: `Şaqul 04 / 06`,
+        priority: `P2 · MedTech QMS`,
+        pillClass: `dossier-pill--secondary`,
+        title: `MedTech / Tibb Vasitələri və ISO 13485`,
+        shortDesc: `Tibb cihazlarının təsnifatı, dosye uyğunluğu, ISO 13485:2016 QMS və post-market vigilance.`,
+        need: `Məhsul təsnifatı, qeydiyyat dosyesi, post-market vigilance, ISO 13485 hazırlığı`,
+        segments: [`medtech`, `clinics`],
+        deliverables: [
+          `Tibb vasitələri üzrə risk sinfi və uyğunluq checklisti (tətbiq oluna bilmə yoxlaması ilə)`,
+          `Qeydiyyat dosyesi gap-analysis və texniki fayl xəritəsi`,
+          `ISO 13485:2016 QMS hazırlığı və post-market hadisə izləniş cədvəli`
+        ]
+      },
+      {
+        id: `v5`,
+        code: `Şaqul 05 / 06`,
+        priority: `P2 · RA/PV və Bazar`,
+        pillClass: `dossier-pill--secondary`,
+        title: `Dərman Qeydiyyatı, Farmakonəzarət və Market Access`,
+        shortDesc: `İstehsalçıların qeydiyyatı, QPPV/PSMF/PSUR sistemləri, qiymət və kompensasiya hazırlığı.`,
+        need: `İstehsalçıların qeydiyyatı, PV sistemi, qiymət və kompensasiya hazırlığı`,
+        segments: [`pharma`],
+        deliverables: [
+          `Qeydiyyat yol xəritəsi və dosye uyğunluğunun ilkin qiymətləndirilməsi`,
+          `Yerli PV SOP paketi, PSMF xülasəsi və periodik hesabat (PSUR/RMP) cədvəli`,
+          `Bazar və qiymət analizi, kompensasiya/Tarif Şurası proseslərinə hazırlıq`
+        ]
+      },
+      {
+        id: `v6`,
+        code: `Şaqul 06 / 06`,
+        priority: `P3 · Akademiya`,
+        pillClass: `dossier-pill--tertiary`,
+        title: `Təlim Akademiyası və Kompetensiya İnkişafı`,
+        shortDesc: `Keyfiyyət, akkreditasiya, GxP, tibbi idarəetmə və Excel/Power BI analitikası üzrə proqramlar.`,
+        need: `Kadrların keyfiyyət, akkreditasiya, GxP, tibbi idarəetmə və data bacarıqları`,
+        segments: [`clinics`, `labs`, `pharma`, `medtech`, `payers`],
+        deliverables: [
+          `Fərdi və korporativ təlim modulları (AZS ISO 7101/15189, GxP, klinika maliyyəsi, Power BI)`,
+          `Təlim sonrası kompetensiya testi və performans qiymətləndirilməsi`,
+          `İştirak sertifikatı (rəsmi dövlət ixtisas sertifikasiyasını əvəz etmir)`
+        ]
+      }
+    ];
+
+    const SEGMENTS = {
+      all: {
+        badge: `Seqment Profili · Bütün 6 Müştəri Qrupu`,
+        title: `Kommersiya Modeli: Layihə + Diaqnostika + Aylıq Retainer`,
+        reason: `Hər seqmentin alış səbəbinə görə fərqli müqavilə arxitekturası tətbiq olunur`,
+        details: [
+          `Özəl klinika şəbəkələri: Diaqnostika + 3–6 aylıq transformasiya layihəsi + aylıq KPI izləmə.`,
+          `Tibbi laboratoriyalar: Gap assessment + prosedur/validasiya dəstəyi + daxili audit.`,
+          `Dərman istehsalçısı / MAH: Məhsul üzrə sabit xidmət haqqı + aylıq PV retainer.`,
+          `Tibb vasitəsi istehsalçısı / idxalçı: Portfolio/dosye üzrə layihə haqqı + dövri hüquqi izləmə.`,
+          `Sığorta və satınalanlar: Bespoke tədqiqat, məlumat müqaviləsi, konsaltinq hesabatı.`,
+          `İctimai / dövlət qurumları: Yalnız qanuni satınalma və maraqlar toqquşmasının idarəsi ilə.`
+        ]
+      },
+      clinics: {
+        badge: `Seqment 01 · Özəl Klinika və Diaqnostika Şəbəkələri`,
+        title: `Alış Səbəbi: Akkreditasiya, Keyfiyyət, Böyümə və Mənfəət İdarəçiliyi`,
+        reason: `İlkin satış modeli: 1–2 həftəlik Diaqnostika → 3–6 aylıq Transformasiya → Aylıq KPI İzləmə`,
+        details: [
+          `Əsas modullar: Şaqul 01 (2028 akkreditasiya / AZS ISO 7101), Şaqul 02 (maya dəyəri, tarif, kassa axını), Şaqul 03/04/06.`,
+          `Klinika rəhbərliyinə “sənəd yığını” yox, pasiyent axını, çarpayı/kabinet yüklənməsi və xərc qənaəti göstərilir.`,
+          `Aylıq KPI dashboard retaineri müştəri ilə uzunmüddətli əməkdaşlıq yaradır.`
+        ]
+      },
+      labs: {
+        badge: `Seqment 02 · Tibbi Laboratoriyalar`,
+        title: `Alış Səbəbi: AZS ISO 15189 Hazırlığı və Proses Səmərəliliyi`,
+        reason: `İlkin satış modeli: Gap Assessment + Prosedur/Validasiya Dəstəyi + Daxili Audit`,
+        details: [
+          `Əsas modullar: Şaqul 03 (AZS ISO 15189:2024) və Şaqul 06 (laboratoriya keyfiyyət təlimi).`,
+          `Reaktiv sərfiyyatı və səhv/təkrar analiz nisbətinin azaldılması əlavə iqtisadi arqument yaradır.`
+        ]
+      },
+      pharma: {
+        badge: `Seqment 03 · Dərman İstehsalçısı / MAH`,
+        title: `Alış Səbəbi: RA/PV və Market Access üzrə Lokal Funksiyanın Autsorsinqi`,
+        reason: `İlkin satış modeli: Məhsul üzrə Sabit Xidmət Haqqı + Aylıq PV Retainer`,
+        details: [
+          `Əsas modullar: Şaqul 05 (Qeydiyyat, PV, Tarif Şurası), Şaqul 02 (HTA/BIA prototipi), Şaqul 06 (GxP təlimi).`,
+          `Fərqlənmə: İstehsalçıya qeydiyyatla yanaşı büdcə təsiri (BIA) və bazar giriş analitikası təqdim etmək.`
+        ]
+      },
+      medtech: {
+        badge: `Seqment 04 · Tibb Vasitəsi İstehsalçısı / İdxalçı`,
+        title: `Alış Səbəbi: Qeydiyyat, Risk Sinfi, ISO 13485 və Post-Market Hazırlığı`,
+        reason: `İlkin satış modeli: Portfolio / Dosye üzrə Layihə Haqqı + Dövri Hüquqi İzləmə`,
+        details: [
+          `Əsas modullar: Şaqul 04 (MedTech QMS və texniki fayl) və Şaqul 06 (təlim).`,
+          `ISO 13485:2016 tətbiq oluna bilməsi idxalçı və ya istehsalçı profilinə görə əvvəlcədən yoxlanılır.`
+        ]
+      },
+      payers: {
+        badge: `Seqment 05–06 · Sığorta, Satınalanlar və İctimai Qurumlar`,
+        title: `Alış Səbəbi: Tarif, Xidmət Paketinin Dəyəri, İslahat və Normativ Layihələr`,
+        reason: `İlkin satış modeli: Bespoke Tədqiqat / Konsaltinq Hesabatı (Yalnız qanuni satınalma və maraqlar toqquşması nəzarəti ilə)`,
+        details: [
+          `Əsas modullar: Şaqul 02 (Tarif, BIA/CEA, satınalma analitikası), Şaqul 01 (sistem qiymətləndirməsi), Şaqul 06 (təlim).`,
+          `Dövlət və ictimai qurumlarla müqavilələrdə maraqlar toqquşması və dövlət vəzifəsi ilə uyğunluq müstəqil hüquqi qiymətləndirilir.`
+        ]
+      }
+    };
+
+    const ROADMAP_PHASES = {
+      1: {
+        badge: `Mərhələ 01 · Ay 01–02`,
+        title: `Bazar Sübutu, Müsahibələr və Hüquqi Çərçivə`,
+        sub: `Missiya, ad, broşür və saytdan əvvəl tələb olunan ilkin təsdiqlər`,
+        months: [1, 2],
+        tasks: [
+          `15–25 yarı-strukturlaşdırılmış müsahibə: 5–8 klinika/hospital rəhbəri, 3–5 laboratoriya, 4–6 dərman/tibb vasitəsi istehsalçısı və ya idxalçısı, 3–5 sığorta/satınalma qərarvericisi.`,
+          `4–6 rəqibdən anonim olmayan, etibarlı kommersiya sorğusu (xidmət həcmi, nəticə sənədləri, müddət, mütəxəssis tərkibi, qiymət strukturu).`,
+          `Regulyator və standart üzrə fəaliyyətin hüquqi yoxlanması: müqavilə riskləri, müstəqillik, fərdi məlumat təhlükəsizliyi və icazələr.`
+        ],
+        gateTitle: `Kəşfiyyat Qapısı (Ay 2 Sonu)`,
+        gateSub: `Ölçülə bilən bazar təsdiqi meyarı`,
+        gateText: `Minimum 15 müsahibə tamamlanmalı, müştərilərin ən kəskin ödəniş etməyə hazır olduğu 2–3 problem sahəsi və qiymət aralığı təsdiqlənməlidir.`,
+        roles: `Layihə təsisçiləri + Hüquq və Uyğunluq Məsləhətçisi + Səhiyyə Maliyyəsi Eksperti`
+      },
+      2: {
+        badge: `Mərhələ 02 · Ay 03–04`,
+        title: `Canlı Pilot Diaqnostika və Minimum Komanda`,
+        sub: `Real mühitdə metodologiyanın və çatdırılma müddətinin sınaqdan keçirilməsi`,
+        months: [3, 4],
+        tasks: [
+          `Bir real klinikada 1–2 həftəlik pilot “Quality + Economics Diagnostic” (AZS ISO 7101 / 2028 hazırlıq boşluqları + xərc/tarif diaqnostikası).`,
+          `Bir tibb cihazı və ya dərman dosyesində test gap-analysis və uyğunluq checklistinin sınağı.`,
+          `5 nəfərlik minimum ekspert nüvəsinin və müqaviləli ixtisaslaşmış ekspert şəbəkəsinin formalaşdırılması.`
+        ],
+        gateTitle: `Pilot Təsdiq Qapısı (Ay 4 Sonu)`,
+        gateSub: `Metodologiya və çatdırılma keyfiyyəti`,
+        gateText: `Pilot müştəridən rəsmi rəy və ölçülə bilən ilkin nəticə paketi (uyğunluq xəritəsi + maliyyə diaqnostikası) əldə olunmalıdır.`,
+        roles: `Klinik Keyfiyyət Eksperti + Səhiyyə Maliyyəsi Eksperti + RA-PV / MedTech QMS Ekspertləri`
+      },
+      3: {
+        badge: `Mərhələ 03 · Ay 05–07`,
+        title: `Strateji Seçim (A/B/C), Paketləmə və İlk Satışlar`,
+        sub: `Pilot nəticələri əsasında rəsmi mövqelənmə və kommersiya startı`,
+        months: [5, 6, 7],
+        tasks: [
+          `İlk 12 ay üçün əsas strateji seçimin (A: Klinika/İqtisadiyyat, B: RA-PV, yoxsa C: İki komandalı inteqrasiya modeli) qəti təsdiqi.`,
+          `Missiya/viziya, 3 əsas xidmət şaquli, müştəri dəyər təklifi, xidmət bukletləri, korporativ veb-sayt və 10–12 slaydlıq investor/tərəfdaş təqdimatının hazırlanması.`,
+          `Özəl klinika və laboratoriyalarla ilk 3–6 aylıq transformasiya müqavilələrinin imzalanması.`
+        ],
+        gateTitle: `Kommersiya Start Qapısı (Ay 7 Sonu)`,
+        gateSub: `İlk təkrarlanan gəlir və brend çıxışı`,
+        gateText: `Ən azı 2–3 aktiv ödənişli diaqnostika/transformasiya layihəsi və hazır 10–12 slaydlıq tərəfdaş paketi.`,
+        roles: `Bütün 5 əsas daxili rol + Kommersiya rəhbərliyi`
+      },
+      4: {
+        badge: `Mərhələ 04 · Ay 08–12`,
+        title: `Retainer Modeli, 2028 Hazırlıq Dalğası və Akademiya`,
+        sub: `Portfelin stabilləşdirilməsi və P3 modullarının işə salınması`,
+        months: [8, 9, 10, 11, 12],
+        tasks: [
+          `Klinikalar üçün aylıq KPI izləmə və dərman sahibləri (MAH) üçün aylıq PV retainer müqavilələrinə keçid.`,
+          `01.01.2028 Dövlət Akkreditasiyası tarixi yaxınlaşdıqca xəstəxana və laboratoriyalar üçün AZS ISO 7101/15189 + mock audit layihələrinin genişləndirilməsi.`,
+          `Təlim Akademiyasının (GxP, akkreditasiya, tibbi idarəetmə, Power BI) və ilk HTA / BIA prototip hesabatlarının pilot tətbiqi.`
+        ],
+        gateTitle: `İllik İcmal Qapısı (Ay 12 Sonu)`,
+        gateSub: `2028 akkreditasiya ilinə tam hazır əməliyyat bazası`,
+        gateText: `Müsbət layihə marjası, təkrarlanan retainer payının formalaşması və müştəri keyslərinə əsaslanan sübut portfeli.`,
+        roles: `5 əsas rol + Müqaviləli HTA/metodologiya və təlim ekspertləri`
+      }
+    };
+
+    const TEAM_ROLES = {
+      quality: `Klinik Keyfiyyət və Audit Eksperti ilk 6 ayda P1 modullarının (2028 akkreditasiya və AZS ISO 7101) və klinikada 1–2 həftəlik pilot diaqnostikanın əsas daşıyıcısıdır.`,
+      rapv: `RA-PV Mütəxəssisi dərman qeydiyyatı dosyelerini, AEM ekspertiza müşayiətini və aylıq PV retainer sistemlərini (QPPV, PSMF, PSUR, RMP) idarə edir.`,
+      medtech: `Tibbi Cihaz QMS Eksperti risk sinfi təsnifatı, texniki fayl xəritəsi, ISO 13485:2016 tətbiq yoxlaması və post-market vigilance paketlərini aparır.`,
+      finance: `Səhiyyə Maliyyəsi və Analitika Eksperti maya dəyəri, tarif modelləşdirilməsi, kassa axını, Power BI KPI dashboard və P3 HTA/BIA prototiplərini qurur.`,
+      legal: `Hüquq və Uyğunluq Məsləhətçisi səlahiyyət sərhədlərini (konsultant vs. sertifikat orqanı), fərdi məlumat təhlükəsizliyini və dövlət satınalmalarında maraqlar toqquşmasını nəzarətdə saxlayır.`
+    };
+
+    /* ================================================================
+       STATE & NAVIGATION
+       ================================================================ */
+    let currentSlide = 1;
+    let viewMode = `scroll`;
+    let activeBenchCompany = `makromed`;
+    let activeMatrixFilter = `all`;
+    let selectedCompetitorId = `iqvia`;
+    let activeSegmentFilter = `all`;
+    let selectedVerticalId = `v1`;
+    let activePhase = 1;
+    let competitorChartInstance = null;
+
+    function getToken(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+
+    function setViewMode(mode) {
+      viewMode = mode;
+      const stack = document.getElementById(`slides-stack`);
+      const btnScroll = document.getElementById(`btn-mode-scroll`);
+      const btnSlide = document.getElementById(`btn-mode-slide`);
+      if (!stack || !btnScroll || !btnSlide) return;
+
+      if (mode === `slide`) {
+        stack.classList.add(`presentation-mode`);
+        btnScroll.setAttribute(`aria-pressed`, `false`);
+        btnSlide.setAttribute(`aria-pressed`, `true`);
+      } else {
+        stack.classList.remove(`presentation-mode`);
+        btnScroll.setAttribute(`aria-pressed`, `true`);
+        btnSlide.setAttribute(`aria-pressed`, `false`);
+      }
+      updateSlideUI();
+    }
+
+    function goToSlide(num) {
+      if (num < 1 || num > 7) return;
+      currentSlide = num;
+      updateSlideUI();
+      const target = document.getElementById(`slide-` + num);
+      if (target) {
+        target.scrollIntoView({ behavior: `smooth`, block: `start` });
+      }
+    }
+
+    function stepSlide(delta) {
+      const next = currentSlide + delta;
+      if (next >= 1 && next <= 7) {
+        goToSlide(next);
+      }
+    }
+
+    function updateSlideUI() {
+      const sections = document.querySelectorAll(`.slide-section`);
+      sections.forEach(function (sec) {
+        const idx = Number(sec.getAttribute(`data-slide`));
+        if (idx === currentSlide) {
+          sec.classList.add(`is-active-slide`);
+        } else {
+          sec.classList.remove(`is-active-slide`);
+        }
+      });
+
+      const pills = document.querySelectorAll(`.slide-pill-btn`);
+      pills.forEach(function (pill) {
+        const idx = Number(pill.getAttribute(`data-slide-target`));
+        if (idx === currentSlide) {
+          pill.setAttribute(`aria-current`, `step`);
+        } else {
+          pill.removeAttribute(`aria-current`);
+        }
+      });
+
+      const badge = document.getElementById(`active-slide-badge`);
+      const nameEl = document.getElementById(`active-slide-name`);
+      const progressFill = document.getElementById(`deck-progress-fill`);
+      const bottomInd = document.getElementById(`bottom-slide-indicator`);
+      const prevTop = document.getElementById(`btn-prev-slide`);
+      const nextTop = document.getElementById(`btn-next-slide`);
+      const prevBot = document.getElementById(`btn-prev-bottom`);
+      const nextBot = document.getElementById(`btn-next-bottom`);
+
+      const padded = currentSlide < 10 ? `0` + currentSlide : String(currentSlide);
+      if (badge) badge.textContent = `Slayd ` + padded + ` / 07`;
+      if (nameEl) nameEl.textContent = SLIDE_NAMES[currentSlide - 1] || ``;
+      if (progressFill) progressFill.style.width = ((currentSlide / 7) * 100).toFixed(2) + `%`;
+
+      const modeLabel = viewMode === `slide` ? `Slayd rejimi` : `Tam oxu rejimi`;
+      if (bottomInd) bottomInd.textContent = `Slayd ` + padded + ` / 07 · ` + modeLabel;
+
+      if (prevTop) prevTop.disabled = currentSlide === 1;
+      if (prevBot) prevBot.disabled = currentSlide === 1;
+      if (nextTop) nextTop.disabled = currentSlide === 7;
+      if (nextBot) nextBot.disabled = currentSlide === 7;
+    }
+
+    /* ================================================================
+       SLIDE 01: STRATEGY SELECTOR
+       ================================================================ */
+    function selectStrategy(key) {
+      const data = STRATEGY_OPTIONS[key];
+      if (!data) return;
+
+      document.querySelectorAll(`[data-strategy]`).forEach(function (btn) {
+        btn.setAttribute(`aria-pressed`, btn.getAttribute(`data-strategy`) === key ? `true` : `false`);
+      });
+
+      const badge = document.getElementById(`strat-badge`);
+      const title = document.getElementById(`strat-title`);
+      const sub = document.getElementById(`strat-sub`);
+      const points = document.getElementById(`strat-points`);
+      const note = document.getElementById(`strat-note`);
+
+      if (badge) badge.textContent = data.badge;
+      if (title) title.textContent = data.title;
+      if (sub) sub.textContent = data.sub;
+      if (note) note.textContent = data.note;
+      if (points) {
+        points.innerHTML = data.points.map(function (p) {
+          return `<li>` + p + `</li>`;
+        }).join(``);
+      }
+    }
+
+    /* ================================================================
+       SLIDE 02: REGULATORY SELECTOR
+       ================================================================ */
+    function selectReg(key) {
+      const data = REG_DETAILS[key];
+      if (!data) return;
+
+      document.querySelectorAll(`[data-reg]`).forEach(function (btn) {
+        btn.setAttribute(`aria-pressed`, btn.getAttribute(`data-reg`) === key ? `true` : `false`);
+      });
+
+      const badge = document.getElementById(`reg-badge`);
+      const title = document.getElementById(`reg-title`);
+      const sub = document.getElementById(`reg-sub`);
+      const points = document.getElementById(`reg-points`);
+      const warning = document.getElementById(`reg-warning`);
+
+      if (badge) badge.textContent = data.badge;
+      if (title) title.textContent = data.title;
+      if (sub) sub.textContent = data.sub;
+      if (warning) warning.textContent = data.warning;
+      if (points) {
+        points.innerHTML = data.points.map(function (p) {
+          return `<li>` + p + `</li>`;
+        }).join(``);
+      }
+    }
+
+    /* ================================================================
+       SLIDE 03: BENCHMARKS (MAKROMED vs PHARMAGATE)
+       ================================================================ */
+    function selectBenchmarkCompany(companyKey) {
+      activeBenchCompany = companyKey;
+      const tabM = document.getElementById(`bench-tab-makromed`);
+      const tabP = document.getElementById(`bench-tab-pharmagate`);
+      if (tabM) tabM.setAttribute(`aria-pressed`, companyKey === `makromed` ? `true` : `false`);
+      if (tabP) tabP.setAttribute(`aria-pressed`, companyKey === `pharmagate` ? `true` : `false`);
+
+      const comp = BENCHMARKS[companyKey];
+      if (!comp) return;
+      renderBenchmarkBlocks(comp);
+      if (comp.blocks.length > 0) {
+        selectBenchmarkBlock(comp.blocks[0].id);
+      }
+    }
+
+    function renderBenchmarkBlocks(comp) {
+      const grid = document.getElementById(`bench-blocks-grid`);
+      if (!grid) return;
+      grid.innerHTML = comp.blocks.map(function (blk) {
+        return `<button type="button" class="block-btn" data-bench-block="` + blk.id + `" aria-pressed="false" onclick="selectBenchmarkBlock('` + blk.id + `')">` +
+          `<span class="index-num">` + blk.code + `</span>` +
+          `<span class="choice-title">` + blk.title + `</span>` +
+          `<span class="choice-summary">` + blk.scope + `</span>` +
+          `</button>`;
+      }).join(``);
+    }
+
+    function selectBenchmarkBlock(blockId) {
+      const comp = BENCHMARKS[activeBenchCompany];
+      if (!comp) return;
+      const blk = comp.blocks.find(function (b) { return b.id === blockId; });
+      if (!blk) return;
+
+      document.querySelectorAll(`[data-bench-block]`).forEach(function (btn) {
+        btn.setAttribute(`aria-pressed`, btn.getAttribute(`data-bench-block`) === blockId ? `true` : `false`);
+      });
+
+      const tag = document.getElementById(`bench-company-tag`);
+      const title = document.getElementById(`bench-block-title`);
+      const scope = document.getElementById(`bench-block-scope`);
+      const details = document.getElementById(`bench-block-details`);
+      const lesson = document.getElementById(`bench-block-lesson`);
+
+      if (tag) tag.textContent = comp.tag;
+      if (title) title.textContent = blk.title;
+      if (scope) scope.textContent = blk.scope;
+      if (lesson) lesson.textContent = blk.lesson;
+      if (details) {
+        details.innerHTML = blk.details.map(function (d) {
+          return `<li>` + d + `</li>`;
+        }).join(``);
+      }
+    }
+
+    /* ================================================================
+       SLIDE 04: COMPETITIVE MATRIX + CHART.JS
+       ================================================================ */
+    function renderMarkBadge(val) {
+      if (val === 2) return `<span class="badge-mark mark-yes" title="Aydın göstərilir">✓</span>`;
+      if (val === 1) return `<span class="badge-mark mark-partial" title="Əlaqəli / nisbətən yaxın">~</span>`;
+      return `<span class="badge-mark mark-no" title="Açıq təsbit edilməyib">—</span>`;
+    }
+
+    function filterMatrix(category) {
+      activeMatrixFilter = category;
+      document.querySelectorAll(`[data-cat-filter]`).forEach(function (btn) {
+        btn.setAttribute(`aria-pressed`, btn.getAttribute(`data-cat-filter`) === category ? `true` : `false`);
+      });
+      renderMatrixRows();
+    }
+
+    function renderMatrixRows() {
+      const tbody = document.getElementById(`matrix-tbody`);
+      if (!tbody) return;
+
+      const filtered = COMPETITORS.filter(function (c) {
+        return activeMatrixFilter === `all` || c.cat === activeMatrixFilter;
+      });
+
+      if (filtered.length > 0 && !filtered.some(function (c) { return c.id === selectedCompetitorId; })) {
+        selectedCompetitorId = filtered[0].id;
+      }
+
+      tbody.innerHTML = filtered.map(function (c) {
+        const isSel = c.id === selectedCompetitorId ? `is-selected` : ``;
+        return `<tr class="` + isSel + `" onclick="selectCompetitor('` + c.id + `')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectCompetitor('` + c.id + `');}">` +
+          `<td><strong>` + c.name + `</strong><br><span class="dossier-meta">` + c.scope + `</span></td>` +
+          `<td class="center">` + renderMarkBadge(c.ra) + `</td>` +
+          `<td class="center">` + renderMarkBadge(c.med) + `</td>` +
+          `<td class="center">` + renderMarkBadge(c.clin) + `</td>` +
+          `<td class="center">` + renderMarkBadge(c.econ) + `</td>` +
+          `<td class="center">` + renderMarkBadge(c.train) + `</td>` +
+          `</tr>`;
+      }).join(``);
+
+      updateCompetitorChart();
+    }
+
+    function selectCompetitor(compId) {
+      selectedCompetitorId = compId;
+      renderMatrixRows();
+    }
+
+    function updateCompetitorChart() {
+      const comp = COMPETITORS.find(function (c) { return c.id === selectedCompetitorId; });
+      if (!comp) return;
+
+      const badge = document.getElementById(`chart-selected-badge`);
+      const title = document.getElementById(`chart-company-title`);
+      const lesson = document.getElementById(`chart-company-lesson`);
+
+      if (badge) badge.textContent = `Seçilmiş: ` + comp.name;
+      if (title) title.textContent = comp.name + ` (` + comp.scope + `) vs. Hədəf İnteqrasiya Modeli`;
+      if (lesson) lesson.textContent = comp.lesson;
+
+      const canvas = document.getElementById(`competitorChart`);
+      if (!canvas || typeof Chart === `undefined`) return;
+
+      const labels = [
+        `Dərman RA/PV`,
+        `Tibb Cihazı RA/QMS`,
+        `Klinika / Akkreditasiya`,
+        `İqtisadi / HTA`,
+        `Təlim Akademiyası`
+      ];
+      const selectedValues = [comp.ra, comp.med, comp.clin, comp.econ, comp.train];
+      const targetValues = [2, 2, 2, 2, 2];
+
+      const colorPrimary = getToken(`--data-1`);
+      const colorAccent = getToken(`--data-2`);
+      const colorGrid = getToken(`--outline-variant`);
+      const colorInk = getToken(`--on-surface`);
+      const colorMuted = getToken(`--on-surface-variant`);
+
+      if (competitorChartInstance) {
+        competitorChartInstance.data.datasets[0].label = comp.name;
+        competitorChartInstance.data.datasets[0].data = selectedValues;
+        competitorChartInstance.update();
+        return;
+      }
+
+      competitorChartInstance = new Chart(canvas.getContext(`2d`), {
+        type: `bar`,
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: comp.name,
+              data: selectedValues,
+              backgroundColor: colorPrimary,
+              borderRadius: 2,
+              barPercentage: 0.72
+            },
+            {
+              label: `Hədəf İnteqrasiya Modeli (Yeni Şirkət)`,
+              data: targetValues,
+              backgroundColor: colorAccent,
+              borderRadius: 2,
+              barPercentage: 0.72
+            }
+          ]
+        },
+        options: {
+          indexAxis: `y`,
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              min: 0,
+              max: 2,
+              ticks: {
+                stepSize: 1,
+                color: colorMuted,
+                callback: function (val) {
+                  if (val === 0) return `— (0)`;
+                  if (val === 1) return `~ (1)`;
+                  if (val === 2) return `✓ (2)`;
+                  return val;
+                }
+              },
+              grid: { color: colorGrid }
+            },
+            y: {
+              ticks: { color: colorInk, font: { weight: `600`, size: 11 } },
+              grid: { display: false }
+            }
+          },
+          plugins: {
+            legend: {
+              position: `bottom`,
+              labels: { color: colorInk, boxWidth: 12, font: { size: 11 } }
+            },
+            tooltip: {
+              callbacks: {
+                label: function (ctx) {
+                  const v = ctx.raw;
+                  const txt = v === 2 ? `Aydın göstərilir (✓)` : (v === 1 ? `Əlaqəli / nisbətən yaxın (~)` : `Açıq təsbit edilməyib (—)`);
+                  return ctx.dataset.label + `: ` + txt;
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    /* ================================================================
+       SLIDE 05: 6 SERVICE VERTICALS & CLIENT SEGMENTS
+       ================================================================ */
+    function renderVerticalsGrid() {
+      const grid = document.getElementById(`verticals-grid`);
+      if (!grid) return;
+
+      grid.innerHTML = VERTICALS.map(function (v) {
+        const isSelected = v.id === selectedVerticalId ? `true` : `false`;
+        const isMatch = activeSegmentFilter !== `all` && v.segments.indexOf(activeSegmentFilter) !== -1;
+        const matchCls = isMatch ? `is-segment-match` : ``;
+        const pillExtra = v.pillClass ? ` ` + v.pillClass : ``;
+
+        return `<button type="button" class="module-card ` + matchCls + `" data-vert-id="` + v.id + `" aria-pressed="` + isSelected + `" onclick="selectVertical('` + v.id + `')">` +
+          `<div>` +
+            `<div class="module-card-top">` +
+              `<span class="dossier-pill` + pillExtra + `">` + v.priority + `</span>` +
+              `<span class="index-num">` + v.code + `</span>` +
+            `</div>` +
+            `<h3 class="module-title">` + v.title + `</h3>` +
+          `</div>` +
+          `<p class="module-desc">` + v.shortDesc + `</p>` +
+        `</button>`;
+      }).join(``);
+    }
+
+    function selectVertical(vertId) {
+      selectedVerticalId = vertId;
+      const v = VERTICALS.find(function (item) { return item.id === vertId; });
+      if (!v) return;
+
+      renderVerticalsGrid();
+
+      const pill = document.getElementById(`vert-priority-pill`);
+      const code = document.getElementById(`vert-code`);
+      const title = document.getElementById(`vert-title`);
+      const need = document.getElementById(`vert-need`);
+      const list = document.getElementById(`vert-deliverables`);
+
+      if (pill) pill.textContent = v.priority;
+      if (code) code.textContent = v.code;
+      if (title) title.textContent = v.title;
+      if (need) need.textContent = `Müştəri ehtiyacı: ` + v.need;
+      if (list) {
+        list.innerHTML = v.deliverables.map(function (d) {
+          return `<li>` + d + `</li>`;
+        }).join(``);
+      }
+    }
+
+    function filterSegment(segKey) {
+      activeSegmentFilter = segKey;
+      document.querySelectorAll(`[data-seg]`).forEach(function (btn) {
+        btn.setAttribute(`aria-pressed`, btn.getAttribute(`data-seg`) === segKey ? `true` : `false`);
+      });
+
+      renderVerticalsGrid();
+
+      const seg = SEGMENTS[segKey] || SEGMENTS.all;
+      const badge = document.getElementById(`seg-badge`);
+      const title = document.getElementById(`seg-title`);
+      const reason = document.getElementById(`seg-reason`);
+      const details = document.getElementById(`seg-details`);
+
+      if (badge) badge.textContent = seg.badge;
+      if (title) title.textContent = seg.title;
+      if (reason) reason.textContent = seg.reason;
+      if (details) {
+        details.innerHTML = seg.details.map(function (item) {
+          return `<li>` + item + `</li>`;
+        }).join(``);
+      }
+    }
+
+    /* ================================================================
+       SLIDE 06: 12-MONTH ROADMAP
+       ================================================================ */
+    function selectPhase(phaseNum) {
+      activePhase = phaseNum;
+      const p = ROADMAP_PHASES[phaseNum];
+      if (!p) return;
+
+      document.querySelectorAll(`[data-phase]`).forEach(function (btn) {
+        btn.setAttribute(`aria-pressed`, Number(btn.getAttribute(`data-phase`)) === phaseNum ? `true` : `false`);
+      });
+
+      const gantt = document.getElementById(`gantt-grid`);
+      if (gantt) {
+        let html = ``;
+        for (let m = 1; m <= 12; m++) {
+          const activeCls = p.months.indexOf(m) !== -1 ? `is-active` : ``;
+          const mLabel = m < 10 ? `AY 0` + m : `AY ` + m;
+          html += `<div class="gantt-month ` + activeCls + `">` + mLabel + `</div>`;
+        }
+        gantt.innerHTML = html;
+      }
+
+      const badge = document.getElementById(`phase-badge`);
+      const title = document.getElementById(`phase-title`);
+      const sub = document.getElementById(`phase-sub`);
+      const tasks = document.getElementById(`phase-tasks`);
+      const gateTitle = document.getElementById(`phase-gate-title`);
+      const gateSub = document.getElementById(`phase-gate-sub`);
+      const gateText = document.getElementById(`phase-gate-text`);
+      const roles = document.getElementById(`phase-roles`);
+
+      if (badge) badge.textContent = p.badge;
+      if (title) title.textContent = p.title;
+      if (sub) sub.textContent = p.sub;
+      if (gateTitle) gateTitle.textContent = p.gateTitle;
+      if (gateSub) gateSub.textContent = p.gateSub;
+      if (gateText) gateText.textContent = p.gateText;
+      if (roles) roles.textContent = p.roles;
+      if (tasks) {
+        tasks.innerHTML = p.tasks.map(function (t) {
+          return `<li>` + t + `</li>`;
+        }).join(``);
+      }
+    }
+
+    /* ================================================================
+       SLIDE 07: TEAM ROLE SELECTOR
+       ================================================================ */
+    function selectTeamRole(roleKey) {
+      const noteText = TEAM_ROLES[roleKey];
+      if (!noteText) return;
+
+      document.querySelectorAll(`[data-role]`).forEach(function (btn) {
+        btn.setAttribute(`aria-pressed`, btn.getAttribute(`data-role`) === roleKey ? `true` : `false`);
+      });
+
+      const noteEl = document.getElementById(`team-role-note`);
+      if (noteEl) noteEl.textContent = noteText;
+    }
+
+    /* ================================================================
+       KEYBOARD & SCROLL TRACKING
+       ================================================================ */
+    document.addEventListener(`keydown`, function (e) {
+      if (viewMode !== `slide`) return;
+      if (e.key === `ArrowRight`) {
+        stepSlide(1);
+      } else if (e.key === `ArrowLeft`) {
+        stepSlide(-1);
+      }
+    });
+
+    function initIntersectionTracking() {
+      if (typeof IntersectionObserver === `undefined`) return;
+      const sections = document.querySelectorAll(`.slide-section`);
+      const observer = new IntersectionObserver(function (entries) {
+        if (viewMode !== `scroll`) return;
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            const idx = Number(entry.target.getAttribute(`data-slide`));
+            if (idx && idx !== currentSlide) {
+              currentSlide = idx;
+              updateSlideUI();
+            }
+          }
+        });
+      }, { threshold: 0.35 });
+
+      sections.forEach(function (sec) { observer.observe(sec); });
+    }
+
+    /* ================================================================
+       INIT ON LOAD
+       ================================================================ */
+    document.addEventListener(`DOMContentLoaded`, function () {
+      updateSlideUI();
+      selectStrategy(`C`);
+      selectReg(`acc2028`);
+      selectBenchmarkCompany(`makromed`);
+      renderMatrixRows();
+      selectVertical(`v1`);
+      filterSegment(`all`);
+      selectPhase(1);
+      selectTeamRole(`quality`);
+      initIntersectionTracking();
+    });
+  </script>
+</body>
+</html>
